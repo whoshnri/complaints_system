@@ -1,0 +1,58 @@
+'use client';
+
+import { useState } from 'react';
+import { followSchoolAction, unfollowSchoolAction } from '@/app/actions/complaints';
+
+export interface School {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+interface SchoolCardProps {
+  school: School;
+  isFollowed: boolean;
+}
+
+export default function SchoolCard({ school, isFollowed: initialFollowed }: SchoolCardProps) {
+  const [isFollowed, setIsFollowed] = useState(initialFollowed);
+  const [loading, setLoading] = useState(false);
+
+  const handleToggle = async () => {
+    setLoading(true);
+    try {
+      if (isFollowed) {
+        await unfollowSchoolAction(school.id);
+        setIsFollowed(false);
+      } else {
+        await followSchoolAction(school.id);
+        setIsFollowed(true);
+      }
+    } catch (err) {
+      console.error('Failed to toggle follow:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-between px-4 py-4 border-b border-border hover:bg-secondary/40 transition-colors">
+      <div className="flex-1 min-w-0 mr-4">
+        <h3 className="text-sm font-semibold text-foreground truncate">{school.name}</h3>
+        {school.description && (
+          <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{school.description}</p>
+        )}
+      </div>
+      <button
+        onClick={handleToggle}
+        disabled={loading}
+        className={`shrink-0 px-4 py-1.5 text-xs font-semibold rounded-full border transition-all disabled:opacity-50 ${isFollowed
+            ? 'bg-foreground text-background border-foreground hover:bg-foreground/80'
+            : 'bg-transparent text-foreground border-border hover:bg-secondary'
+          }`}
+      >
+        {loading ? '...' : isFollowed ? 'Following' : 'Follow'}
+      </button>
+    </div>
+  );
+}
