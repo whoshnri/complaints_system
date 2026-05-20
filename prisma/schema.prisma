@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            BigInt    @id @default(autoincrement())
+  username      String    @unique @db.VarChar(50)
+  email         String    @unique @db.VarChar(255)
+  passwordHash  String    @map("password_hash") @db.VarChar(255)
+  displayName   String?   @map("display_name") @db.VarChar(100)
+  bio           String?
+  isSchoolAdmin Boolean   @default(false) @map("is_school_admin")
+  schoolId      BigInt?   @map("school_id")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
+
+  sessions        Session[]
+  complaints      Complaint[]
+  comments        Comment[]
+  bookmarks       Bookmark[]
+  upvotes         Upvote[]
+  followedSchools SchoolFollower[]
+  school          School?          @relation(fields: [schoolId], references: [id])
+
+  @@index([email], map: "idx_users_email")
+  @@index([schoolId], map: "idx_users_school_id")
+  @@map("users")
+}
+
+model Session {
+  id           BigInt   @id @default(autoincrement())
+  userId       BigInt   @map("user_id")
+  sessionToken String   @unique @map("session_token") @db.VarChar(255)
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_sessions_user_id")
+  @@index([sessionToken], map: "idx_sessions_token")
+  @@index([expiresAt], map: "idx_sessions_expires_at")
+  @@map("sessions")
+}
+
+model School {
+  id             BigInt    @id @default(autoincrement())
+  name           String    @unique @db.VarChar(255)
+  city           String?   @db.VarChar(100)
+  state          String?   @db.VarChar(50)
+  country        String?   @db.VarChar(100)
+  description    String?
+  complaintCount Int       @default(0) @map("complaint_count")
+  followerCount  Int       @default(0) @map("follower_count")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  admins     User[]
+  complaints Complaint[]
+  followers  SchoolFollower[]
+
+  @@map("schools")
+}
+
+model Complaint {
+  id           BigInt    @id @default(autoincrement())
+  userId       BigInt?   @map("user_id")
+  schoolId     BigInt    @map("school_id")
+  title        String    @db.VarChar(255)
+  content      String
+  category     String?   @db.VarChar(50)
+  isAnonymous  Boolean   @default(true) @map("is_anonymous")
+  isPublic     Boolean   @default(true) @map("is_public")
+  upvoteCount  Int       @default(0) @map("upvote_count")
+  commentCount Int       @default(0) @map("comment_count")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  school    School     @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  bookmarks Bookmark[]
+  upvotes   Upvote[]
+
+  @@index([schoolId], map: "idx_complaints_school_id")
+  @@index([userId], map: "idx_complaints_user_id")
+  @@index([createdAt(sort: Desc)], map: "idx_complaints_created_at")
+  @@map("complaints")
+}
+
+model Comment {
+  id           BigInt    @id @default(autoincrement())
+  complaintId  BigInt    @map("complaint_id")
+  userId       BigInt?   @map("user_id")
+  content      String
+  isAdminReply Boolean   @default(false) @map("is_admin_reply")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([complaintId], map: "idx_comments_complaint_id")
+  @@index([userId], map: "idx_comments_user_id")
+  @@map("comments")
+}
+
+model Bookmark {
+  id          BigInt   @id @default(autoincrement())
+  userId      BigInt   @map("user_id")
+  complaintId BigInt   @map("complaint_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, complaintId])
+  @@index([userId], map: "idx_bookmarks_user_id")
+  @@map("bookmarks")
+}
+
+model Upvote {
+  id          BigInt   @id @default(autoincrement())
+  userId      BigInt   @map("user_id")
+  complaintId BigInt   @map("complaint_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, complaintId])
+  @@index([userId], map: "idx_upvotes_user_id")
+  @@map("upvotes")
+}
+
+model SchoolFollower {
+  id        BigInt   @id @default(autoincrement())
+  userId    BigInt   @map("user_id")
+  schoolId  BigInt   @map("school_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, schoolId])
+  @@index([userId], map: "idx_school_followers_user_id")
+  @@index([schoolId], map: "idx_school_followers_school_id")
+  @@map("school_followers")
+}
