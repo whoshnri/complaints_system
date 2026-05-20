@@ -41,6 +41,7 @@ export type SchoolSumAggregateOutputType = {
 export type SchoolMinAggregateOutputType = {
   id: bigint | null
   name: string | null
+  faculty: string | null
   city: string | null
   state: string | null
   country: string | null
@@ -55,6 +56,7 @@ export type SchoolMinAggregateOutputType = {
 export type SchoolMaxAggregateOutputType = {
   id: bigint | null
   name: string | null
+  faculty: string | null
   city: string | null
   state: string | null
   country: string | null
@@ -69,6 +71,7 @@ export type SchoolMaxAggregateOutputType = {
 export type SchoolCountAggregateOutputType = {
   id: number
   name: number
+  faculty: number
   city: number
   state: number
   country: number
@@ -97,6 +100,7 @@ export type SchoolSumAggregateInputType = {
 export type SchoolMinAggregateInputType = {
   id?: true
   name?: true
+  faculty?: true
   city?: true
   state?: true
   country?: true
@@ -111,6 +115,7 @@ export type SchoolMinAggregateInputType = {
 export type SchoolMaxAggregateInputType = {
   id?: true
   name?: true
+  faculty?: true
   city?: true
   state?: true
   country?: true
@@ -125,6 +130,7 @@ export type SchoolMaxAggregateInputType = {
 export type SchoolCountAggregateInputType = {
   id?: true
   name?: true
+  faculty?: true
   city?: true
   state?: true
   country?: true
@@ -226,6 +232,7 @@ export type SchoolGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type SchoolGroupByOutputType = {
   id: bigint
   name: string
+  faculty: string | null
   city: string | null
   state: string | null
   country: string | null
@@ -263,6 +270,7 @@ export type SchoolWhereInput = {
   NOT?: Prisma.SchoolWhereInput | Prisma.SchoolWhereInput[]
   id?: Prisma.BigIntFilter<"School"> | bigint | number
   name?: Prisma.StringFilter<"School"> | string
+  faculty?: Prisma.StringNullableFilter<"School"> | string | null
   city?: Prisma.StringNullableFilter<"School"> | string | null
   state?: Prisma.StringNullableFilter<"School"> | string | null
   country?: Prisma.StringNullableFilter<"School"> | string | null
@@ -280,6 +288,7 @@ export type SchoolWhereInput = {
 export type SchoolOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  faculty?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -300,6 +309,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SchoolWhereInput | Prisma.SchoolWhereInput[]
   OR?: Prisma.SchoolWhereInput[]
   NOT?: Prisma.SchoolWhereInput | Prisma.SchoolWhereInput[]
+  faculty?: Prisma.StringNullableFilter<"School"> | string | null
   city?: Prisma.StringNullableFilter<"School"> | string | null
   state?: Prisma.StringNullableFilter<"School"> | string | null
   country?: Prisma.StringNullableFilter<"School"> | string | null
@@ -317,6 +327,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
 export type SchoolOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  faculty?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -339,6 +350,7 @@ export type SchoolScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SchoolScalarWhereWithAggregatesInput | Prisma.SchoolScalarWhereWithAggregatesInput[]
   id?: Prisma.BigIntWithAggregatesFilter<"School"> | bigint | number
   name?: Prisma.StringWithAggregatesFilter<"School"> | string
+  faculty?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   state?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   country?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
@@ -353,6 +365,7 @@ export type SchoolScalarWhereWithAggregatesInput = {
 export type SchoolCreateInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -370,6 +383,7 @@ export type SchoolCreateInput = {
 export type SchoolUncheckedCreateInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -387,6 +401,7 @@ export type SchoolUncheckedCreateInput = {
 export type SchoolUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -404,6 +419,7 @@ export type SchoolUpdateInput = {
 export type SchoolUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -421,6 +437,7 @@ export type SchoolUncheckedUpdateInput = {
 export type SchoolCreateManyInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -435,6 +452,7 @@ export type SchoolCreateManyInput = {
 export type SchoolUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -449,6 +467,7 @@ export type SchoolUpdateManyMutationInput = {
 export type SchoolUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -468,6 +487,7 @@ export type SchoolNullableScalarRelationFilter = {
 export type SchoolCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  faculty?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -488,6 +508,7 @@ export type SchoolAvgOrderByAggregateInput = {
 export type SchoolMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  faculty?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -502,6 +523,7 @@ export type SchoolMaxOrderByAggregateInput = {
 export type SchoolMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  faculty?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -579,6 +601,7 @@ export type SchoolUpdateOneRequiredWithoutFollowersNestedInput = {
 export type SchoolCreateWithoutAdminsInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -595,6 +618,7 @@ export type SchoolCreateWithoutAdminsInput = {
 export type SchoolUncheckedCreateWithoutAdminsInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -627,6 +651,7 @@ export type SchoolUpdateToOneWithWhereWithoutAdminsInput = {
 export type SchoolUpdateWithoutAdminsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -643,6 +668,7 @@ export type SchoolUpdateWithoutAdminsInput = {
 export type SchoolUncheckedUpdateWithoutAdminsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -659,6 +685,7 @@ export type SchoolUncheckedUpdateWithoutAdminsInput = {
 export type SchoolCreateWithoutComplaintsInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -675,6 +702,7 @@ export type SchoolCreateWithoutComplaintsInput = {
 export type SchoolUncheckedCreateWithoutComplaintsInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -707,6 +735,7 @@ export type SchoolUpdateToOneWithWhereWithoutComplaintsInput = {
 export type SchoolUpdateWithoutComplaintsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -723,6 +752,7 @@ export type SchoolUpdateWithoutComplaintsInput = {
 export type SchoolUncheckedUpdateWithoutComplaintsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,6 +769,7 @@ export type SchoolUncheckedUpdateWithoutComplaintsInput = {
 export type SchoolCreateWithoutFollowersInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -755,6 +786,7 @@ export type SchoolCreateWithoutFollowersInput = {
 export type SchoolUncheckedCreateWithoutFollowersInput = {
   id?: bigint | number
   name: string
+  faculty?: string | null
   city?: string | null
   state?: string | null
   country?: string | null
@@ -787,6 +819,7 @@ export type SchoolUpdateToOneWithWhereWithoutFollowersInput = {
 export type SchoolUpdateWithoutFollowersInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -803,6 +836,7 @@ export type SchoolUpdateWithoutFollowersInput = {
 export type SchoolUncheckedUpdateWithoutFollowersInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -868,6 +902,7 @@ export type SchoolCountOutputTypeCountFollowersArgs<ExtArgs extends runtime.Type
 export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  faculty?: boolean
   city?: boolean
   state?: boolean
   country?: boolean
@@ -886,6 +921,7 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type SchoolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  faculty?: boolean
   city?: boolean
   state?: boolean
   country?: boolean
@@ -900,6 +936,7 @@ export type SchoolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type SchoolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  faculty?: boolean
   city?: boolean
   state?: boolean
   country?: boolean
@@ -914,6 +951,7 @@ export type SchoolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type SchoolSelectScalar = {
   id?: boolean
   name?: boolean
+  faculty?: boolean
   city?: boolean
   state?: boolean
   country?: boolean
@@ -925,7 +963,7 @@ export type SchoolSelectScalar = {
   deletedAt?: boolean
 }
 
-export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "city" | "state" | "country" | "description" | "complaintCount" | "followerCount" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["school"]>
+export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "faculty" | "city" | "state" | "country" | "description" | "complaintCount" | "followerCount" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["school"]>
 export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admins?: boolean | Prisma.School$adminsArgs<ExtArgs>
   complaints?: boolean | Prisma.School$complaintsArgs<ExtArgs>
@@ -945,6 +983,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
     name: string
+    faculty: string | null
     city: string | null
     state: string | null
     country: string | null
@@ -1382,6 +1421,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
 export interface SchoolFieldRefs {
   readonly id: Prisma.FieldRef<"School", 'BigInt'>
   readonly name: Prisma.FieldRef<"School", 'String'>
+  readonly faculty: Prisma.FieldRef<"School", 'String'>
   readonly city: Prisma.FieldRef<"School", 'String'>
   readonly state: Prisma.FieldRef<"School", 'String'>
   readonly country: Prisma.FieldRef<"School", 'String'>
