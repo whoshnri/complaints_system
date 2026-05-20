@@ -37,18 +37,16 @@ export async function createSessionToken(userId: string): Promise<string> {
 }
 
 export async function getSessionUser(token?: string) {
+  const cookieStore = token ? null : await cookies();
+  const sessionToken = token || cookieStore?.get(SESSION_COOKIE_NAME)?.value;
+
+  if (!sessionToken) {
+    return null;
+  }
+
   try {
-    const cookieStore = await cookies();
-    const sessionToken = token || cookieStore.get(SESSION_COOKIE_NAME)?.value;
-
-    if (!sessionToken) {
-      return null;
-    }
-
     const session = await getSessionByToken(sessionToken);
     if (!session) {
-      // Token invalid or expired, clear cookie
-      cookieStore.delete(SESSION_COOKIE_NAME);
       return null;
     }
 

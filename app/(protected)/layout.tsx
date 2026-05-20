@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'Anonymous student feedback platform',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProtectedLayout({
   children,
 }: {

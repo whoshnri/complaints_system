@@ -1,14 +1,6 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
-
-const roboto = Roboto({ 
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto',
-});
 
 export const metadata: Metadata = {
   title: 'VoiceIt',
@@ -39,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={roboto.variable}>
+    <html lang="en">
       <body className="font-sans antialiased">
         {children}
         <Analytics />
