@@ -1096,6 +1096,7 @@ export const ComplaintScalarFieldEnum = {
   title: 'title',
   description: 'description',
   category: 'category',
+  urgency: 'urgency',
   status: 'status',
   isAnonymous: 'isAnonymous',
   isPublic: 'isPublic',

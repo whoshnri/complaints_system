@@ -49,6 +49,7 @@ export type ComplaintMinAggregateOutputType = {
   title: string | null
   description: string | null
   category: string | null
+  urgency: string | null
   status: string | null
   isAnonymous: boolean | null
   isPublic: boolean | null
@@ -67,6 +68,7 @@ export type ComplaintMaxAggregateOutputType = {
   title: string | null
   description: string | null
   category: string | null
+  urgency: string | null
   status: string | null
   isAnonymous: boolean | null
   isPublic: boolean | null
@@ -85,6 +87,7 @@ export type ComplaintCountAggregateOutputType = {
   title: number
   description: number
   category: number
+  urgency: number
   status: number
   isAnonymous: number
   isPublic: number
@@ -121,6 +124,7 @@ export type ComplaintMinAggregateInputType = {
   title?: true
   description?: true
   category?: true
+  urgency?: true
   status?: true
   isAnonymous?: true
   isPublic?: true
@@ -139,6 +143,7 @@ export type ComplaintMaxAggregateInputType = {
   title?: true
   description?: true
   category?: true
+  urgency?: true
   status?: true
   isAnonymous?: true
   isPublic?: true
@@ -157,6 +162,7 @@ export type ComplaintCountAggregateInputType = {
   title?: true
   description?: true
   category?: true
+  urgency?: true
   status?: true
   isAnonymous?: true
   isPublic?: true
@@ -262,6 +268,7 @@ export type ComplaintGroupByOutputType = {
   title: string
   description: string
   category: string | null
+  urgency: string
   status: string
   isAnonymous: boolean
   isPublic: boolean
@@ -303,6 +310,7 @@ export type ComplaintWhereInput = {
   title?: Prisma.StringFilter<"Complaint"> | string
   description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringFilter<"Complaint"> | string
   status?: Prisma.StringFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
@@ -326,6 +334,7 @@ export type ComplaintOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
+  urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
@@ -352,6 +361,7 @@ export type ComplaintWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Complaint"> | string
   description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringFilter<"Complaint"> | string
   status?: Prisma.StringFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
@@ -375,6 +385,7 @@ export type ComplaintOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
+  urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
@@ -401,6 +412,7 @@ export type ComplaintScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   description?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   status?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolWithAggregatesFilter<"Complaint"> | boolean
@@ -417,6 +429,7 @@ export type ComplaintCreateInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -440,6 +453,7 @@ export type ComplaintUncheckedCreateInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -459,6 +473,7 @@ export type ComplaintUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -482,6 +497,7 @@ export type ComplaintUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -503,6 +519,7 @@ export type ComplaintCreateManyInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -519,6 +536,7 @@ export type ComplaintUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -537,6 +555,7 @@ export type ComplaintUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -565,6 +584,7 @@ export type ComplaintCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
@@ -591,6 +611,7 @@ export type ComplaintMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
@@ -609,6 +630,7 @@ export type ComplaintMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
@@ -764,6 +786,7 @@ export type ComplaintCreateWithoutUserInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -785,6 +808,7 @@ export type ComplaintUncheckedCreateWithoutUserInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -835,6 +859,7 @@ export type ComplaintScalarWhereInput = {
   title?: Prisma.StringFilter<"Complaint"> | string
   description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringFilter<"Complaint"> | string
   status?: Prisma.StringFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
@@ -851,6 +876,7 @@ export type ComplaintCreateWithoutSchoolInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -872,6 +898,7 @@ export type ComplaintUncheckedCreateWithoutSchoolInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -917,6 +944,7 @@ export type ComplaintCreateWithoutCommentsInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -939,6 +967,7 @@ export type ComplaintUncheckedCreateWithoutCommentsInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -973,6 +1002,7 @@ export type ComplaintUpdateWithoutCommentsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -995,6 +1025,7 @@ export type ComplaintUncheckedUpdateWithoutCommentsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1013,6 +1044,7 @@ export type ComplaintCreateWithoutBookmarksInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1035,6 +1067,7 @@ export type ComplaintUncheckedCreateWithoutBookmarksInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1069,6 +1102,7 @@ export type ComplaintUpdateWithoutBookmarksInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1091,6 +1125,7 @@ export type ComplaintUncheckedUpdateWithoutBookmarksInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1109,6 +1144,7 @@ export type ComplaintCreateWithoutUpvotesInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1131,6 +1167,7 @@ export type ComplaintUncheckedCreateWithoutUpvotesInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1165,6 +1202,7 @@ export type ComplaintUpdateWithoutUpvotesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1187,6 +1225,7 @@ export type ComplaintUncheckedUpdateWithoutUpvotesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1206,6 +1245,7 @@ export type ComplaintCreateManyUserInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1222,6 +1262,7 @@ export type ComplaintUpdateWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1243,6 +1284,7 @@ export type ComplaintUncheckedUpdateWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1263,6 +1305,7 @@ export type ComplaintUncheckedUpdateManyWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1280,6 +1323,7 @@ export type ComplaintCreateManySchoolInput = {
   title: string
   description: string
   category?: string | null
+  urgency?: string
   status?: string
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1296,6 +1340,7 @@ export type ComplaintUpdateWithoutSchoolInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1317,6 +1362,7 @@ export type ComplaintUncheckedUpdateWithoutSchoolInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1337,6 +1383,7 @@ export type ComplaintUncheckedUpdateManyWithoutSchoolInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1404,6 +1451,7 @@ export type ComplaintSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   title?: boolean
   description?: boolean
   category?: boolean
+  urgency?: boolean
   status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1428,6 +1476,7 @@ export type ComplaintSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   title?: boolean
   description?: boolean
   category?: boolean
+  urgency?: boolean
   status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1448,6 +1497,7 @@ export type ComplaintSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   title?: boolean
   description?: boolean
   category?: boolean
+  urgency?: boolean
   status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1468,6 +1518,7 @@ export type ComplaintSelectScalar = {
   title?: boolean
   description?: boolean
   category?: boolean
+  urgency?: boolean
   status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
@@ -1479,7 +1530,7 @@ export type ComplaintSelectScalar = {
   deletedAt?: boolean
 }
 
-export type ComplaintOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "title" | "description" | "category" | "status" | "isAnonymous" | "isPublic" | "upvoteCount" | "commentCount" | "attachment" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["complaint"]>
+export type ComplaintOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "title" | "description" | "category" | "urgency" | "status" | "isAnonymous" | "isPublic" | "upvoteCount" | "commentCount" | "attachment" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["complaint"]>
 export type ComplaintInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Complaint$userArgs<ExtArgs>
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -1513,6 +1564,7 @@ export type $ComplaintPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     title: string
     description: string
     category: string | null
+    urgency: string
     status: string
     isAnonymous: boolean
     isPublic: boolean
@@ -1956,6 +2008,7 @@ export interface ComplaintFieldRefs {
   readonly title: Prisma.FieldRef<"Complaint", 'String'>
   readonly description: Prisma.FieldRef<"Complaint", 'String'>
   readonly category: Prisma.FieldRef<"Complaint", 'String'>
+  readonly urgency: Prisma.FieldRef<"Complaint", 'String'>
   readonly status: Prisma.FieldRef<"Complaint", 'String'>
   readonly isAnonymous: Prisma.FieldRef<"Complaint", 'Boolean'>
   readonly isPublic: Prisma.FieldRef<"Complaint", 'Boolean'>
