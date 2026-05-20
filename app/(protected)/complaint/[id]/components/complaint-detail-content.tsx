@@ -74,6 +74,24 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
             </span>
           </div>
 
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            {complaint.category && (
+              <span className="text-xs px-2 py-0.5 rounded-full border border-border uppercase tracking-wide">
+                {complaint.category}
+              </span>
+            )}
+            {complaint.urgency && (
+              <span className="text-xs px-2 py-0.5 rounded-full border border-border uppercase tracking-wide">
+                {complaint.urgency}
+              </span>
+            )}
+            {complaint.status && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-secondary uppercase tracking-wide">
+                {complaint.status.replace('_', ' ')}
+              </span>
+            )}
+          </div>
+
           <h1 className="text-2xl font-bold text-foreground mb-4 leading-tight">
             {complaint.title}
           </h1>

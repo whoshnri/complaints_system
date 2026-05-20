@@ -78,6 +78,7 @@ model Complaint {
   title        String    @db.VarChar(200)
   description  String    @map("description")
   category     String?   @db.VarChar(50)
+  urgency      String    @default("medium") @db.VarChar(20)
   status       String    @default("submitted") @db.VarChar(20)
   isAnonymous  Boolean   @default(true) @map("is_anonymous")
   isPublic     Boolean   @default(true) @map("is_public")

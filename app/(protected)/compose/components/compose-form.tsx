@@ -9,27 +9,14 @@ interface School {
   name: string;
 }
 
-const COMPLAINT_CATEGORIES = [
-  'Academic',
-  'Administrative',
-  'Facilities',
-  'Financial',
-  'Health & Safety',
-  'Library',
-  'Sports & Recreation',
-  'Student Services',
-  'Technology',
-  'Other',
-];
-
 export default function ComposeForm() {
   const router = useRouter();
   const [schools, setSchools] = useState<School[]>([]);
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | ''>('');
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<string>('');
-  const [isPublic, setIsPublic] = useState(true);
+  const [content, setContent] = useState('');
+  const [category, setCategory] = useState('academic');
+  const [urgency, setUrgency] = useState<'low' | 'medium' | 'high' | 'critical'>('medium');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingSchools, setLoadingSchools] = useState(true);
@@ -68,9 +55,9 @@ export default function ComposeForm() {
       const { data, error: actionError } = await createComplaintAction(
         Number(selectedSchoolId),
         title,
-        description,
-        isPublic,
-        category || undefined
+        content,
+        category,
+        urgency
       );
 
       if (actionError) {
@@ -100,7 +87,7 @@ export default function ComposeForm() {
     <form onSubmit={handleSubmit} className="divide-y divide-border">
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
-          Target School or Department
+          Select Your School
         </label>
         <select
           value={selectedSchoolId}
@@ -119,24 +106,6 @@ export default function ComposeForm() {
 
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
-          Category
-        </label>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full px-3 py-2 bg-input border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-        >
-          <option value="">-- Select a category (optional) --</option>
-          {COMPLAINT_CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="p-4">
-        <label className="block text-sm font-medium text-foreground mb-2">
           Title
         </label>
         <input
@@ -145,44 +114,61 @@ export default function ComposeForm() {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g., Cafeteria food needs improvement"
           className="w-full px-3 py-2 bg-input border border-border text-foreground placeholder-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-          maxLength={200}
+          maxLength={255}
           required
         />
         <p className="text-xs text-muted-foreground mt-1">
-          {title.length}/200 characters
+          {title.length}/255 characters
         </p>
       </div>
 
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
-          Detailed Description
+          Complaint Category
         </label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Describe your complaint in detail. Be specific about what needs to change..."
-          className="w-full px-3 py-2 bg-input border border-border text-foreground placeholder-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none h-40"
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full px-3 py-2 bg-input border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
           required
-        />
+        >
+          <option value="academic">Academic</option>
+          <option value="administrative">Administrative</option>
+          <option value="facilities">Facilities</option>
+          <option value="financial">Financial</option>
+          <option value="welfare">Welfare</option>
+          <option value="other">Other</option>
+        </select>
       </div>
 
       <div className="p-4">
-        <label className="flex items-center gap-3">
-          <input
-            type="checkbox"
-            checked={isPublic}
-            onChange={(e) => setIsPublic(e.target.checked)}
-            className="w-4 h-4 border border-border rounded cursor-pointer"
-          />
-          <span className="text-sm text-foreground">
-            Post publicly (share with all users)
-          </span>
+        <label className="block text-sm font-medium text-foreground mb-2">
+          Urgency
         </label>
-        <p className="text-xs text-muted-foreground mt-2">
-          {isPublic
-            ? 'Your complaint will be visible to all users'
-            : 'Your complaint will only be visible to your school'}
-        </p>
+        <select
+          value={urgency}
+          onChange={(e) => setUrgency(e.target.value as 'low' | 'medium' | 'high' | 'critical')}
+          className="w-full px-3 py-2 bg-input border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        >
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="critical">Critical</option>
+        </select>
+      </div>
+
+      <div className="p-4">
+        <label className="block text-sm font-medium text-foreground mb-2">
+          Your Complaint
+        </label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Describe your feedback in detail. Be specific about what needs to change..."
+          className="w-full px-3 py-2 bg-input border border-border text-foreground placeholder-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none h-40"
+          required
+        />
       </div>
 
       {error && (

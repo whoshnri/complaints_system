@@ -13,6 +13,7 @@ import {
   removeBookmark,
   getUserIdFromSession,
   createComplaint,
+  createComment,
   searchComplaints,
   followSchool,
   unfollowSchool,
@@ -174,23 +175,40 @@ export async function removeBookmarkAction(complaintId: number) {
 export async function createComplaintAction(
   schoolId: number,
   title: string,
-  description: string,
-  isPublic: boolean = true,
-  category?: string
+  content: string,
+  category: string,
+  urgency: 'low' | 'medium' | 'high' | 'critical' = 'medium'
 ) {
   try {
     const userId = await getAuthedUserId();
     if (!userId) return { data: null, error: 'Not authenticated' };
 
     if (!title || title.trim().length === 0) return { data: null, error: 'Title is required' };
-    if (!description || description.trim().length === 0) return { data: null, error: 'Description is required' };
-    if (title.length > 200) return { data: null, error: 'Title must be less than 200 characters' };
+    if (!content || content.trim().length === 0) return { data: null, error: 'Content is required' };
+    if (!category || category.trim().length === 0) return { data: null, error: 'Category is required' };
+    if (title.length > 255) return { data: null, error: 'Title must be less than 255 characters' };
 
-    const complaint = await createComplaint(userId, schoolId, title, description, isPublic, category);
+    const complaint = await createComplaint(userId, schoolId, title, content, category, urgency);
     return { data: complaint, error: null };
   } catch (error) {
     console.error('Error creating complaint:', error);
     return { data: null, error: 'Failed to create complaint' };
+  }
+}
+
+export async function createCommentAction(complaintId: number, content: string) {
+  try {
+    const userId = await getAuthedUserId();
+    if (!userId) return { data: null, error: 'Not authenticated' };
+    if (!content || content.trim().length === 0) {
+      return { data: null, error: 'Comment cannot be empty' };
+    }
+
+    const comment = await createComment(String(complaintId), String(userId), content.trim());
+    return { data: comment, error: null };
+  } catch (error) {
+    console.error('Error creating comment:', error);
+    return { data: null, error: 'Failed to post contribution' };
   }
 }
 

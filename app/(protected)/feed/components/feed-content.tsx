@@ -6,10 +6,11 @@ import ComplaintCard from './complaint-card';
 export interface Complaint {
   id: string;
   title: string;
-  description: string;
-  category?: string;
-  status?: string;
+  content: string;
   school_name: string;
+  category?: string;
+  urgency?: string;
+  status?: string;
   created_at: string;
   upvote_count: number;
   comment_count: number;
@@ -54,11 +55,12 @@ export default function FeedContent({ initialComplaints, isEmpty }: FeedContentP
           key={complaint.id}
           id={complaint.id}
           title={complaint.title}
-          description={complaint.description}
-          category={complaint.category}
-          status={complaint.status}
-          schoolName={complaint.school_name}
-          createdAt={complaint.created_at}
+            content={complaint.content}
+            schoolName={complaint.school_name}
+            category={complaint.category}
+            urgency={complaint.urgency}
+            status={complaint.status}
+            createdAt={complaint.created_at}
           upvoteCount={complaint.upvote_count}
           commentCount={complaint.comment_count}
         />

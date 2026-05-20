@@ -29,8 +29,25 @@ export default function SignUpForm() {
   return (
     <form action={handleSubmit} className="space-y-4">
       <div>
+        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+          Email (optional)
+        </label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="optional@email.com"
+          disabled={loading}
+          className="w-full"
+        />
+        <p className="text-xs text-muted-foreground mt-1">
+          Only used for password recovery.
+        </p>
+      </div>
+
+      <div>
         <label htmlFor="username" className="block text-sm font-medium text-foreground mb-2">
-          Username
+          Anonymous Username
         </label>
         <Input
           id="username"
@@ -41,26 +58,6 @@ export default function SignUpForm() {
           disabled={loading}
           className="w-full"
         />
-        <p className="text-xs text-muted-foreground mt-1">
-          Choose a username that doesn't reveal your identity
-        </p>
-      </div>
-
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-          Email (optional)
-        </label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="your@email.com"
-          disabled={loading}
-          className="w-full"
-        />
-        <p className="text-xs text-muted-foreground mt-1">
-          Only for password recovery - not shared publicly
-        </p>
       </div>
 
       <div>

@@ -1,6 +1,13 @@
 import { cookies } from 'next/headers';
 import { hash, compare } from 'bcryptjs';
-import { createSession, getSessionByToken, deleteSession, getUserByEmail, getUserByUsername, createUser } from './db';
+import {
+  createSession,
+  getSessionByToken,
+  deleteSession,
+  getUserByEmail,
+  getUserByUsername,
+  createUser,
+} from './db';
 
 const SESSION_COOKIE_NAME = 'voiceit_session';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -68,17 +75,15 @@ export async function logout(): Promise<void> {
   cookieStore.delete(SESSION_COOKIE_NAME);
 }
 
-export async function registerUser(email: string | null, username: string, password: string, role: string = 'student') {
-  // Check if username already exists
-  const existingUserByUsername = await getUserByUsername(username);
-  if (existingUserByUsername) {
+export async function registerUser(username: string, password: string, email?: string) {
+  const existingUsername = await getUserByUsername(username);
+  if (existingUsername) {
     throw new Error('Username already in use');
   }
 
-  // Check if email already exists (if provided)
   if (email) {
-    const existingUserByEmail = await getUserByEmail(email);
-    if (existingUserByEmail) {
+    const existingEmail = await getUserByEmail(email);
+    if (existingEmail) {
       throw new Error('Email already in use');
     }
   }
@@ -87,7 +92,7 @@ export async function registerUser(email: string | null, username: string, passw
   const passwordHash = await hashPassword(password);
 
   // Create user
-  const user = await createUser(email, passwordHash, username, role);
+  const user = await createUser(passwordHash, username, email);
 
   // Create session
   await createSessionToken(user.id);
@@ -95,26 +100,16 @@ export async function registerUser(email: string | null, username: string, passw
   return user;
 }
 
-export async function loginUser(usernameOrEmail: string, password: string) {
-  // Try to get user by email first, then by username
-  let user = usernameOrEmail.includes('@') 
-    ? await getUserByEmail(usernameOrEmail)
-    : await getUserByUsername(usernameOrEmail);
-
-  // If not found by email, try username
-  if (!user && usernameOrEmail.includes('@')) {
-    user = await getUserByUsername(usernameOrEmail);
-  }
-
-  console.log(user);
+export async function loginUser(username: string, password: string) {
+  const user = await getUserByUsername(username);
   if (!user) {
-    throw new Error('Invalid username/email or password');
+    throw new Error('Invalid username or password');
   }
 
   // Verify password
   const isValidPassword = await verifyPassword(password, user.password_hash);
   if (!isValidPassword) {
-    throw new Error('Invalid username/email or password');
+    throw new Error('Invalid username or password');
   }
 
   // Create session
