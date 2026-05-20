@@ -93,7 +93,9 @@ export default function SearchContent({ initialQuery }: SearchContentProps) {
                 key={complaint.id}
                 id={complaint.id.toString()}
                 title={complaint.title}
-                content={complaint.content}
+                description={complaint.description}
+                category={complaint.category}
+                status={complaint.status}
                 schoolName={complaint.school_name || 'Unknown School'}
                 createdAt={complaint.created_at}
                 upvoteCount={complaint.upvote_count || 0}

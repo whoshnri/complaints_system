@@ -7,7 +7,9 @@ import { formatDistanceToNow } from 'date-fns';
 interface ComplaintCardProps {
   id: string;
   title: string;
-  content: string;
+  description: string;
+  category?: string;
+  status?: string;
   schoolName: string;
   createdAt: string;
   upvoteCount: number;
@@ -19,7 +21,9 @@ interface ComplaintCardProps {
 export default function ComplaintCard({
   id,
   title,
-  content,
+  description,
+  category,
+  status,
   schoolName,
   createdAt,
   upvoteCount,
@@ -28,6 +32,15 @@ export default function ComplaintCard({
   isBookmarked = false,
 }: ComplaintCardProps) {
   const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true });
+
+  // Map status to display format
+  const statusDisplay = status ? status.replace('_', ' ').toUpperCase() : 'SUBMITTED';
+  const statusColor = {
+    submitted: 'text-muted-foreground',
+    under_review: 'text-blue-500',
+    resolved: 'text-green-500',
+    dismissed: 'text-red-500',
+  }[status || 'submitted'] || 'text-muted-foreground';
 
   return (
     <Link href={`/complaint/${id}`}>
@@ -38,10 +51,12 @@ export default function ComplaintCard({
               <h2 className="text-lg font-semibold text-foreground leading-tight">{title}</h2>
             </div>
 
-            <p className="text-sm text-foreground mb-3 line-clamp-2">{content}</p>
+            <p className="text-sm text-foreground mb-3 line-clamp-2">{description}</p>
 
             <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
               <span className="font-medium">{schoolName}</span>
+              {category && <span className="px-2 py-0.5 bg-secondary rounded">{category}</span>}
+              <span className={`px-2 py-0.5 rounded font-medium ${statusColor}`}>{statusDisplay}</span>
               <span>{timeAgo}</span>
             </div>
 

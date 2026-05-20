@@ -6,7 +6,9 @@ import ComplaintCard from './complaint-card';
 export interface Complaint {
   id: string;
   title: string;
-  content: string;
+  description: string;
+  category?: string;
+  status?: string;
   school_name: string;
   created_at: string;
   upvote_count: number;
@@ -52,7 +54,9 @@ export default function FeedContent({ initialComplaints, isEmpty }: FeedContentP
           key={complaint.id}
           id={complaint.id}
           title={complaint.title}
-          content={complaint.content}
+          description={complaint.description}
+          category={complaint.category}
+          status={complaint.status}
           schoolName={complaint.school_name}
           createdAt={complaint.created_at}
           upvoteCount={complaint.upvote_count}
