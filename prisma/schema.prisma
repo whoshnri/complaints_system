@@ -11,8 +11,9 @@ datasource db {
 model User {
   id            BigInt    @id @default(autoincrement())
   username      String    @unique @db.VarChar(50)
-  email         String    @unique @db.VarChar(255)
+  email         String?   @unique @db.VarChar(100)
   passwordHash  String    @map("password_hash") @db.VarChar(255)
+  role          String    @default("student") @db.VarChar(20)
   displayName   String?   @map("display_name") @db.VarChar(100)
   bio           String?
   isSchoolAdmin Boolean   @default(false) @map("is_school_admin")
@@ -51,7 +52,8 @@ model Session {
 
 model School {
   id             BigInt    @id @default(autoincrement())
-  name           String    @unique @db.VarChar(255)
+  name           String    @unique @db.VarChar(150)
+  faculty        String?   @db.VarChar(150)
   city           String?   @db.VarChar(100)
   state          String?   @db.VarChar(50)
   country        String?   @db.VarChar(100)
@@ -73,13 +75,15 @@ model Complaint {
   id           BigInt    @id @default(autoincrement())
   userId       BigInt?   @map("user_id")
   schoolId     BigInt    @map("school_id")
-  title        String    @db.VarChar(255)
-  content      String
+  title        String    @db.VarChar(200)
+  description  String    @map("description")
   category     String?   @db.VarChar(50)
+  status       String    @default("submitted") @db.VarChar(20)
   isAnonymous  Boolean   @default(true) @map("is_anonymous")
   isPublic     Boolean   @default(true) @map("is_public")
   upvoteCount  Int       @default(0) @map("upvote_count")
   commentCount Int       @default(0) @map("comment_count")
+  attachment   String?   @db.VarChar(255)
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedAt    DateTime  @default(now()) @updatedAt @map("updated_at")
   deletedAt    DateTime? @map("deleted_at")
@@ -93,6 +97,7 @@ model Complaint {
   @@index([schoolId], map: "idx_complaints_school_id")
   @@index([userId], map: "idx_complaints_user_id")
   @@index([createdAt(sort: Desc)], map: "idx_complaints_created_at")
+  @@index([status], map: "idx_complaints_status")
   @@map("complaints")
 }
 
