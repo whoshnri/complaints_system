@@ -8,6 +8,9 @@ export interface Complaint {
   title: string;
   content: string;
   school_name: string;
+  category?: string;
+  urgency?: string;
+  status?: string;
   created_at: string;
   upvote_count: number;
   comment_count: number;
@@ -52,9 +55,12 @@ export default function FeedContent({ initialComplaints, isEmpty }: FeedContentP
           key={complaint.id}
           id={complaint.id}
           title={complaint.title}
-          content={complaint.content}
-          schoolName={complaint.school_name}
-          createdAt={complaint.created_at}
+            content={complaint.content}
+            schoolName={complaint.school_name}
+            category={complaint.category}
+            urgency={complaint.urgency}
+            status={complaint.status}
+            createdAt={complaint.created_at}
           upvoteCount={complaint.upvote_count}
           commentCount={complaint.comment_count}
         />

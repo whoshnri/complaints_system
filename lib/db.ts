@@ -23,6 +23,8 @@ function userRow(user: any, includePassword = false) {
     id: toNumberId(user.id),
     email: user.email,
     username: user.username,
+    role: user.role,
+    school_id: toNumberId(user.schoolId),
     ...(includePassword ? { password_hash: user.passwordHash } : {}),
     created_at: toIsoString(user.createdAt),
   };
@@ -43,10 +45,27 @@ function sessionRow(session: any) {
 function schoolRow(school: any) {
   if (!school) return school;
 
+  const statusCounts = (school.complaints ?? []).reduce(
+    (acc: Record<string, number>, complaint: { status: string }) => {
+      acc[complaint.status] = (acc[complaint.status] ?? 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
   return {
     id: toNumberId(school.id),
     name: school.name,
     description: school.description,
+    total_complaints: school._count?.complaints ?? school.complaintCount ?? 0,
+    resolved_complaints: statusCounts.resolved ?? 0,
+    pending_complaints: (statusCounts.submitted ?? 0) + (statusCounts.under_review ?? 0),
+    response_rate:
+      (school._count?.complaints ?? school.complaintCount ?? 0) > 0
+        ? Math.round(
+            ((statusCounts.resolved ?? 0) / (school._count?.complaints ?? school.complaintCount ?? 1)) * 100
+          )
+        : 0,
     created_at: toIsoString(school.createdAt),
   };
 }
@@ -59,7 +78,11 @@ function complaintRow(complaint: any, extras: Record<string, unknown> = {}) {
     user_id: toNumberId(complaint.userId),
     school_id: toNumberId(complaint.schoolId),
     title: complaint.title,
-    content: complaint.content,
+    content: complaint.description,
+    category: complaint.category,
+    urgency: complaint.urgency,
+    status: complaint.status,
+    attachment: complaint.attachment,
     is_public: complaint.isPublic,
     created_at: toIsoString(complaint.createdAt),
     school_name: complaint.school?.name,
@@ -84,12 +107,21 @@ function commentRow(comment: any) {
 }
 
 // Users
-export async function createUser(email: string, passwordHash: string, username: string) {
+export async function createUser(
+  passwordHash: string,
+  username: string,
+  email?: string,
+  role: 'student' | 'admin' = 'student',
+  schoolId?: number
+) {
   const user = await prisma.user.create({
     data: {
       email,
       passwordHash,
       username,
+      role,
+      isSchoolAdmin: role === 'admin',
+      schoolId: schoolId == null ? null : toBigIntId(schoolId),
     },
   });
 
@@ -97,8 +129,17 @@ export async function createUser(email: string, passwordHash: string, username: 
 }
 
 export async function getUserByEmail(email: string) {
+  if (!email) return null;
   const user = await prisma.user.findUnique({
     where: { email },
+  });
+
+  return userRow(user, true);
+}
+
+export async function getUserByUsername(username: string) {
+  const user = await prisma.user.findUnique({
+    where: { username },
   });
 
   return userRow(user, true);
@@ -158,6 +199,21 @@ export async function createSchool(name: string, description?: string) {
 
 export async function getAllSchools() {
   const schools = await prisma.school.findMany({
+    include: {
+      _count: {
+        select: {
+          complaints: true,
+        },
+      },
+      complaints: {
+        where: {
+          deletedAt: null,
+        },
+        select: {
+          status: true,
+        },
+      },
+    },
     orderBy: { name: 'asc' },
   });
 
@@ -260,16 +316,20 @@ export async function createComplaint(
   userId: number,
   schoolId: number,
   title: string,
-  content: string,
-  isPublic: boolean = true
+  description: string,
+  category?: string,
+  urgency: 'low' | 'medium' | 'high' | 'critical' = 'medium'
 ) {
   const complaint = await prisma.complaint.create({
     data: {
       userId: toBigIntId(userId),
       schoolId: toBigIntId(schoolId),
       title,
-      content,
-      isPublic,
+      description,
+      category,
+      urgency,
+      status: 'submitted',
+      isPublic: true,
     },
     include: {
       school: true,
@@ -580,7 +640,7 @@ export async function searchComplaints(query: string, limit: number = 20) {
           },
         },
         {
-          content: {
+          description: {
             contains: query,
             mode: 'insensitive',
           },

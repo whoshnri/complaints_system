@@ -7,6 +7,10 @@ export interface School {
   id: number;
   name: string;
   description?: string;
+  total_complaints?: number;
+  resolved_complaints?: number;
+  pending_complaints?: number;
+  response_rate?: number;
 }
 
 interface SchoolCardProps {
@@ -42,6 +46,12 @@ export default function SchoolCard({ school, isFollowed: initialFollowed }: Scho
         {school.description && (
           <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{school.description}</p>
         )}
+        <div className="flex flex-wrap gap-3 mt-1 text-[11px] text-muted-foreground">
+          <span>Total: {school.total_complaints ?? 0}</span>
+          <span>Resolved: {school.resolved_complaints ?? 0}</span>
+          <span>Pending: {school.pending_complaints ?? 0}</span>
+          <span>Response: {school.response_rate ?? 0}%</span>
+        </div>
       </div>
       <button
         onClick={handleToggle}

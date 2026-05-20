@@ -52,6 +52,15 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
     });
   };
 
+  // Map status to display format
+  const statusDisplay = complaint.status ? complaint.status.replace('_', ' ').toUpperCase() : 'SUBMITTED';
+  const statusColor = {
+    submitted: 'text-muted-foreground bg-secondary',
+    under_review: 'text-blue-600 bg-blue-50 dark:bg-blue-950',
+    resolved: 'text-green-600 bg-green-50 dark:bg-green-950',
+    dismissed: 'text-red-600 bg-red-50 dark:bg-red-950',
+  }[complaint.status || 'submitted'] || 'text-muted-foreground bg-secondary';
+
   return (
     <div className="flex flex-col h-screen">
       <article className="flex-1 overflow-y-auto">
@@ -65,12 +74,41 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
             </span>
           </div>
 
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            {complaint.category && (
+              <span className="text-xs px-2 py-0.5 rounded-full border border-border uppercase tracking-wide">
+                {complaint.category}
+              </span>
+            )}
+            {complaint.urgency && (
+              <span className="text-xs px-2 py-0.5 rounded-full border border-border uppercase tracking-wide">
+                {complaint.urgency}
+              </span>
+            )}
+            {complaint.status && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-secondary uppercase tracking-wide">
+                {complaint.status.replace('_', ' ')}
+              </span>
+            )}
+          </div>
+
           <h1 className="text-2xl font-bold text-foreground mb-4 leading-tight">
             {complaint.title}
           </h1>
 
+          <div className="flex items-center gap-2 mb-4">
+            {complaint.category && (
+              <span className="px-2 py-1 text-xs font-medium bg-secondary text-foreground rounded">
+                {complaint.category}
+              </span>
+            )}
+            <span className={`px-2 py-1 text-xs font-medium rounded ${statusColor}`}>
+              {statusDisplay}
+            </span>
+          </div>
+
           <p className="text-sm text-muted-foreground mb-6 whitespace-pre-wrap">
-            {complaint.content}
+            {complaint.description}
           </p>
 
           <div className="flex items-center gap-6 py-3 border-t border-b border-border">

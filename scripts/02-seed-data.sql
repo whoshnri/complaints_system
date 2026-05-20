@@ -12,13 +12,13 @@ INSERT INTO users (email, password_hash, username, created_at) VALUES
   ('charlie@example.com', '$2b$12$qSvjQQoVXo9QUMXpNDh0JuMLc2eAwhIxKr9vOQr0sxoEhbD1T3OYa', 'charlie_feedback', NOW());
 
 -- Seed complaints
-INSERT INTO complaints (user_id, school_id, title, content, is_public, created_at) VALUES
-  (1, 1, 'Cafeteria food quality needs improvement', 'The cafeteria has been serving the same repetitive meals. We need more nutritious and diverse options. Students are tired of the same pasta and chicken every week.', true, NOW() - INTERVAL '2 days'),
-  (2, 1, 'Parking situation is getting worse', 'The parking lot is completely full by 8:30 AM. Many students have to park blocks away from campus. This is unfair and makes arriving late inevitable.', true, NOW() - INTERVAL '1 day'),
-  (1, 2, 'Library hours should be extended', 'The library closes at 6 PM on weekdays, which is too early for students who have evening classes. We need at least 8 PM closing time.', true, NOW() - INTERVAL '12 hours'),
-  (3, 1, 'Class sizes are too large', 'Most of my classes have 40+ students, making it hard for professors to give individual attention. Some classes should be split into smaller sections.', true, NOW() - INTERVAL '6 hours'),
-  (2, 3, 'Registration system needs a complete overhaul', 'The current registration website is slow and crashes during peak hours. The user interface is confusing and outdated. This needs immediate attention.', true, NOW() - INTERVAL '3 hours'),
-  (3, 2, 'Lack of mental health resources', 'The counseling center has a 3-week waiting list. Student mental health is suffering. We need more counselors and counseling services.', true, NOW() - INTERVAL '4 hours');
+INSERT INTO complaints (user_id, school_id, title, description, category, urgency, status, is_public, created_at) VALUES
+  (1, 1, 'Cafeteria food quality needs improvement', 'The cafeteria has been serving the same repetitive meals. We need more nutritious and diverse options. Students are tired of the same pasta and chicken every week.', 'facilities', 'medium', 'submitted', true, NOW() - INTERVAL '2 days'),
+  (2, 1, 'Parking situation is getting worse', 'The parking lot is completely full by 8:30 AM. Many students have to park blocks away from campus. This is unfair and makes arriving late inevitable.', 'facilities', 'high', 'under_review', true, NOW() - INTERVAL '1 day'),
+  (1, 2, 'Library hours should be extended', 'The library closes at 6 PM on weekdays, which is too early for students who have evening classes. We need at least 8 PM closing time.', 'academic', 'medium', 'submitted', true, NOW() - INTERVAL '12 hours'),
+  (3, 1, 'Class sizes are too large', 'Most of my classes have 40+ students, making it hard for professors to give individual attention. Some classes should be split into smaller sections.', 'academic', 'high', 'under_review', true, NOW() - INTERVAL '6 hours'),
+  (2, 3, 'Registration system needs a complete overhaul', 'The current registration website is slow and crashes during peak hours. The user interface is confusing and outdated. This needs immediate attention.', 'administrative', 'critical', 'resolved', true, NOW() - INTERVAL '3 hours'),
+  (3, 2, 'Lack of mental health resources', 'The counseling center has a 3-week waiting list. Student mental health is suffering. We need more counselors and counseling services.', 'administrative', 'high', 'submitted', true, NOW() - INTERVAL '4 hours');
 
 -- Seed upvotes for realistic engagement
 INSERT INTO upvotes (complaint_id, user_id, created_at) VALUES

@@ -15,7 +15,8 @@ export default function ComposeForm() {
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | ''>('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [isPublic, setIsPublic] = useState(true);
+  const [category, setCategory] = useState('academic');
+  const [urgency, setUrgency] = useState<'low' | 'medium' | 'high' | 'critical'>('medium');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingSchools, setLoadingSchools] = useState(true);
@@ -55,7 +56,8 @@ export default function ComposeForm() {
         Number(selectedSchoolId),
         title,
         content,
-        isPublic
+        category,
+        urgency
       );
 
       if (actionError) {
@@ -122,6 +124,42 @@ export default function ComposeForm() {
 
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
+          Complaint Category
+        </label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full px-3 py-2 bg-input border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        >
+          <option value="academic">Academic</option>
+          <option value="administrative">Administrative</option>
+          <option value="facilities">Facilities</option>
+          <option value="financial">Financial</option>
+          <option value="welfare">Welfare</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div className="p-4">
+        <label className="block text-sm font-medium text-foreground mb-2">
+          Urgency
+        </label>
+        <select
+          value={urgency}
+          onChange={(e) => setUrgency(e.target.value as 'low' | 'medium' | 'high' | 'critical')}
+          className="w-full px-3 py-2 bg-input border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        >
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="critical">Critical</option>
+        </select>
+      </div>
+
+      <div className="p-4">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Your Complaint
         </label>
         <textarea
@@ -131,25 +169,6 @@ export default function ComposeForm() {
           className="w-full px-3 py-2 bg-input border border-border text-foreground placeholder-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none h-40"
           required
         />
-      </div>
-
-      <div className="p-4">
-        <label className="flex items-center gap-3">
-          <input
-            type="checkbox"
-            checked={isPublic}
-            onChange={(e) => setIsPublic(e.target.checked)}
-            className="w-4 h-4 border border-border rounded cursor-pointer"
-          />
-          <span className="text-sm text-foreground">
-            Post publicly (share with all users)
-          </span>
-        </label>
-        <p className="text-xs text-muted-foreground mt-2">
-          {isPublic
-            ? 'Your complaint will be visible to all users'
-            : 'Your complaint will only be visible to your school'}
-        </p>
       </div>
 
       {error && (

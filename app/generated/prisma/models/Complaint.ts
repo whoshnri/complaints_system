@@ -47,12 +47,15 @@ export type ComplaintMinAggregateOutputType = {
   userId: bigint | null
   schoolId: bigint | null
   title: string | null
-  content: string | null
+  description: string | null
   category: string | null
+  urgency: string | null
+  status: string | null
   isAnonymous: boolean | null
   isPublic: boolean | null
   upvoteCount: number | null
   commentCount: number | null
+  attachment: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -63,12 +66,15 @@ export type ComplaintMaxAggregateOutputType = {
   userId: bigint | null
   schoolId: bigint | null
   title: string | null
-  content: string | null
+  description: string | null
   category: string | null
+  urgency: string | null
+  status: string | null
   isAnonymous: boolean | null
   isPublic: boolean | null
   upvoteCount: number | null
   commentCount: number | null
+  attachment: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -79,12 +85,15 @@ export type ComplaintCountAggregateOutputType = {
   userId: number
   schoolId: number
   title: number
-  content: number
+  description: number
   category: number
+  urgency: number
+  status: number
   isAnonymous: number
   isPublic: number
   upvoteCount: number
   commentCount: number
+  attachment: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -113,12 +122,15 @@ export type ComplaintMinAggregateInputType = {
   userId?: true
   schoolId?: true
   title?: true
-  content?: true
+  description?: true
   category?: true
+  urgency?: true
+  status?: true
   isAnonymous?: true
   isPublic?: true
   upvoteCount?: true
   commentCount?: true
+  attachment?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -129,12 +141,15 @@ export type ComplaintMaxAggregateInputType = {
   userId?: true
   schoolId?: true
   title?: true
-  content?: true
+  description?: true
   category?: true
+  urgency?: true
+  status?: true
   isAnonymous?: true
   isPublic?: true
   upvoteCount?: true
   commentCount?: true
+  attachment?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -145,12 +160,15 @@ export type ComplaintCountAggregateInputType = {
   userId?: true
   schoolId?: true
   title?: true
-  content?: true
+  description?: true
   category?: true
+  urgency?: true
+  status?: true
   isAnonymous?: true
   isPublic?: true
   upvoteCount?: true
   commentCount?: true
+  attachment?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -248,12 +266,15 @@ export type ComplaintGroupByOutputType = {
   userId: bigint | null
   schoolId: bigint
   title: string
-  content: string
+  description: string
   category: string | null
+  urgency: string
+  status: string
   isAnonymous: boolean
   isPublic: boolean
   upvoteCount: number
   commentCount: number
+  attachment: string | null
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -287,12 +308,15 @@ export type ComplaintWhereInput = {
   userId?: Prisma.BigIntNullableFilter<"Complaint"> | bigint | number | null
   schoolId?: Prisma.BigIntFilter<"Complaint"> | bigint | number
   title?: Prisma.StringFilter<"Complaint"> | string
-  content?: Prisma.StringFilter<"Complaint"> | string
+  description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringFilter<"Complaint"> | string
+  status?: Prisma.StringFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntFilter<"Complaint"> | number
   commentCount?: Prisma.IntFilter<"Complaint"> | number
+  attachment?: Prisma.StringNullableFilter<"Complaint"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Complaint"> | Date | string | null
@@ -308,12 +332,15 @@ export type ComplaintOrderByWithRelationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
+  urgency?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
+  attachment?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -332,12 +359,15 @@ export type ComplaintWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.BigIntNullableFilter<"Complaint"> | bigint | number | null
   schoolId?: Prisma.BigIntFilter<"Complaint"> | bigint | number
   title?: Prisma.StringFilter<"Complaint"> | string
-  content?: Prisma.StringFilter<"Complaint"> | string
+  description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringFilter<"Complaint"> | string
+  status?: Prisma.StringFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntFilter<"Complaint"> | number
   commentCount?: Prisma.IntFilter<"Complaint"> | number
+  attachment?: Prisma.StringNullableFilter<"Complaint"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Complaint"> | Date | string | null
@@ -353,12 +383,15 @@ export type ComplaintOrderByWithAggregationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
+  urgency?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
+  attachment?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -377,12 +410,15 @@ export type ComplaintScalarWhereWithAggregatesInput = {
   userId?: Prisma.BigIntNullableWithAggregatesFilter<"Complaint"> | bigint | number | null
   schoolId?: Prisma.BigIntWithAggregatesFilter<"Complaint"> | bigint | number
   title?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
-  content?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
+  description?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
+  status?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolWithAggregatesFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntWithAggregatesFilter<"Complaint"> | number
   commentCount?: Prisma.IntWithAggregatesFilter<"Complaint"> | number
+  attachment?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Complaint"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Complaint"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Complaint"> | Date | string | null
@@ -391,12 +427,15 @@ export type ComplaintScalarWhereWithAggregatesInput = {
 export type ComplaintCreateInput = {
   id?: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -412,12 +451,15 @@ export type ComplaintUncheckedCreateInput = {
   userId?: bigint | number | null
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -429,12 +471,15 @@ export type ComplaintUncheckedCreateInput = {
 export type ComplaintUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -450,12 +495,15 @@ export type ComplaintUncheckedUpdateInput = {
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -469,12 +517,15 @@ export type ComplaintCreateManyInput = {
   userId?: bigint | number | null
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -483,12 +534,15 @@ export type ComplaintCreateManyInput = {
 export type ComplaintUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -499,12 +553,15 @@ export type ComplaintUncheckedUpdateManyInput = {
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -525,12 +582,15 @@ export type ComplaintCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  urgency?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
+  attachment?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -549,12 +609,15 @@ export type ComplaintMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  urgency?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
+  attachment?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -565,12 +628,15 @@ export type ComplaintMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  urgency?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isAnonymous?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
+  attachment?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -718,12 +784,15 @@ export type ComplaintUpdateOneRequiredWithoutUpvotesNestedInput = {
 export type ComplaintCreateWithoutUserInput = {
   id?: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -737,12 +806,15 @@ export type ComplaintUncheckedCreateWithoutUserInput = {
   id?: bigint | number
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -785,12 +857,15 @@ export type ComplaintScalarWhereInput = {
   userId?: Prisma.BigIntNullableFilter<"Complaint"> | bigint | number | null
   schoolId?: Prisma.BigIntFilter<"Complaint"> | bigint | number
   title?: Prisma.StringFilter<"Complaint"> | string
-  content?: Prisma.StringFilter<"Complaint"> | string
+  description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
+  urgency?: Prisma.StringFilter<"Complaint"> | string
+  status?: Prisma.StringFilter<"Complaint"> | string
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntFilter<"Complaint"> | number
   commentCount?: Prisma.IntFilter<"Complaint"> | number
+  attachment?: Prisma.StringNullableFilter<"Complaint"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Complaint"> | Date | string | null
@@ -799,12 +874,15 @@ export type ComplaintScalarWhereInput = {
 export type ComplaintCreateWithoutSchoolInput = {
   id?: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -818,12 +896,15 @@ export type ComplaintUncheckedCreateWithoutSchoolInput = {
   id?: bigint | number
   userId?: bigint | number | null
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -861,12 +942,15 @@ export type ComplaintUpdateManyWithWhereWithoutSchoolInput = {
 export type ComplaintCreateWithoutCommentsInput = {
   id?: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -881,12 +965,15 @@ export type ComplaintUncheckedCreateWithoutCommentsInput = {
   userId?: bigint | number | null
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -913,12 +1000,15 @@ export type ComplaintUpdateToOneWithWhereWithoutCommentsInput = {
 export type ComplaintUpdateWithoutCommentsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -933,12 +1023,15 @@ export type ComplaintUncheckedUpdateWithoutCommentsInput = {
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -949,12 +1042,15 @@ export type ComplaintUncheckedUpdateWithoutCommentsInput = {
 export type ComplaintCreateWithoutBookmarksInput = {
   id?: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -969,12 +1065,15 @@ export type ComplaintUncheckedCreateWithoutBookmarksInput = {
   userId?: bigint | number | null
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1001,12 +1100,15 @@ export type ComplaintUpdateToOneWithWhereWithoutBookmarksInput = {
 export type ComplaintUpdateWithoutBookmarksInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1021,12 +1123,15 @@ export type ComplaintUncheckedUpdateWithoutBookmarksInput = {
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1037,12 +1142,15 @@ export type ComplaintUncheckedUpdateWithoutBookmarksInput = {
 export type ComplaintCreateWithoutUpvotesInput = {
   id?: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1057,12 +1165,15 @@ export type ComplaintUncheckedCreateWithoutUpvotesInput = {
   userId?: bigint | number | null
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1089,12 +1200,15 @@ export type ComplaintUpdateToOneWithWhereWithoutUpvotesInput = {
 export type ComplaintUpdateWithoutUpvotesInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1109,12 +1223,15 @@ export type ComplaintUncheckedUpdateWithoutUpvotesInput = {
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1126,12 +1243,15 @@ export type ComplaintCreateManyUserInput = {
   id?: bigint | number
   schoolId: bigint | number
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1140,12 +1260,15 @@ export type ComplaintCreateManyUserInput = {
 export type ComplaintUpdateWithoutUserInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1159,12 +1282,15 @@ export type ComplaintUncheckedUpdateWithoutUserInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1177,12 +1303,15 @@ export type ComplaintUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   schoolId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1192,12 +1321,15 @@ export type ComplaintCreateManySchoolInput = {
   id?: bigint | number
   userId?: bigint | number | null
   title: string
-  content: string
+  description: string
   category?: string | null
+  urgency?: string
+  status?: string
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
   commentCount?: number
+  attachment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1206,12 +1338,15 @@ export type ComplaintCreateManySchoolInput = {
 export type ComplaintUpdateWithoutSchoolInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1225,12 +1360,15 @@ export type ComplaintUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1243,12 +1381,15 @@ export type ComplaintUncheckedUpdateManyWithoutSchoolInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   userId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1308,12 +1449,15 @@ export type ComplaintSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   userId?: boolean
   schoolId?: boolean
   title?: boolean
-  content?: boolean
+  description?: boolean
   category?: boolean
+  urgency?: boolean
+  status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: boolean
   commentCount?: boolean
+  attachment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1330,12 +1474,15 @@ export type ComplaintSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   userId?: boolean
   schoolId?: boolean
   title?: boolean
-  content?: boolean
+  description?: boolean
   category?: boolean
+  urgency?: boolean
+  status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: boolean
   commentCount?: boolean
+  attachment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1348,12 +1495,15 @@ export type ComplaintSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   userId?: boolean
   schoolId?: boolean
   title?: boolean
-  content?: boolean
+  description?: boolean
   category?: boolean
+  urgency?: boolean
+  status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: boolean
   commentCount?: boolean
+  attachment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1366,18 +1516,21 @@ export type ComplaintSelectScalar = {
   userId?: boolean
   schoolId?: boolean
   title?: boolean
-  content?: boolean
+  description?: boolean
   category?: boolean
+  urgency?: boolean
+  status?: boolean
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: boolean
   commentCount?: boolean
+  attachment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type ComplaintOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "title" | "content" | "category" | "isAnonymous" | "isPublic" | "upvoteCount" | "commentCount" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["complaint"]>
+export type ComplaintOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "title" | "description" | "category" | "urgency" | "status" | "isAnonymous" | "isPublic" | "upvoteCount" | "commentCount" | "attachment" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["complaint"]>
 export type ComplaintInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Complaint$userArgs<ExtArgs>
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -1409,12 +1562,15 @@ export type $ComplaintPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     userId: bigint | null
     schoolId: bigint
     title: string
-    content: string
+    description: string
     category: string | null
+    urgency: string
+    status: string
     isAnonymous: boolean
     isPublic: boolean
     upvoteCount: number
     commentCount: number
+    attachment: string | null
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1850,12 +2006,15 @@ export interface ComplaintFieldRefs {
   readonly userId: Prisma.FieldRef<"Complaint", 'BigInt'>
   readonly schoolId: Prisma.FieldRef<"Complaint", 'BigInt'>
   readonly title: Prisma.FieldRef<"Complaint", 'String'>
-  readonly content: Prisma.FieldRef<"Complaint", 'String'>
+  readonly description: Prisma.FieldRef<"Complaint", 'String'>
   readonly category: Prisma.FieldRef<"Complaint", 'String'>
+  readonly urgency: Prisma.FieldRef<"Complaint", 'String'>
+  readonly status: Prisma.FieldRef<"Complaint", 'String'>
   readonly isAnonymous: Prisma.FieldRef<"Complaint", 'Boolean'>
   readonly isPublic: Prisma.FieldRef<"Complaint", 'Boolean'>
   readonly upvoteCount: Prisma.FieldRef<"Complaint", 'Int'>
   readonly commentCount: Prisma.FieldRef<"Complaint", 'Int'>
+  readonly attachment: Prisma.FieldRef<"Complaint", 'String'>
   readonly createdAt: Prisma.FieldRef<"Complaint", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Complaint", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Complaint", 'DateTime'>

@@ -5,8 +5,9 @@
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) DEFAULT 'student',
   display_name VARCHAR(100),
   bio TEXT,
   is_school_admin BOOLEAN DEFAULT FALSE,
@@ -46,12 +47,15 @@ CREATE TABLE complaints (
   user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
   school_id BIGINT NOT NULL REFERENCES schools(id) ON DELETE CASCADE,
   title VARCHAR(255) NOT NULL,
-  content TEXT NOT NULL,
+  description TEXT NOT NULL,
   category VARCHAR(50),
+  urgency VARCHAR(20) DEFAULT 'medium',
+  status VARCHAR(20) DEFAULT 'submitted',
   is_anonymous BOOLEAN DEFAULT TRUE,
   is_public BOOLEAN DEFAULT TRUE,
   upvote_count INT DEFAULT 0,
   comment_count INT DEFAULT 0,
+  attachment VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   deleted_at TIMESTAMP
@@ -105,6 +109,7 @@ CREATE INDEX idx_sessions_expires_at ON sessions(expires_at);
 CREATE INDEX idx_complaints_school_id ON complaints(school_id);
 CREATE INDEX idx_complaints_user_id ON complaints(user_id);
 CREATE INDEX idx_complaints_created_at ON complaints(created_at DESC);
+CREATE INDEX idx_complaints_status ON complaints(status);
 CREATE INDEX idx_comments_complaint_id ON comments(complaint_id);
 CREATE INDEX idx_comments_user_id ON comments(user_id);
 CREATE INDEX idx_bookmarks_user_id ON bookmarks(user_id);

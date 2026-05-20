@@ -6,7 +6,7 @@ import { LogOut, Bookmark, GraduationCap } from 'lucide-react';
 
 export interface User {
   id: number;
-  email: string;
+  email?: string | null;
   username: string;
   created_at: string;
 }
@@ -41,7 +41,7 @@ export default function AccountContent({ user }: AccountContentProps) {
       <div className="p-4 space-y-4">
         <div>
           <h2 className="text-sm font-medium text-muted-foreground mb-1">Email</h2>
-          <p className="text-foreground">{user.email}</p>
+          <p className="text-foreground">{user.email || 'Not provided'}</p>
         </div>
         <div>
           <h2 className="text-sm font-medium text-muted-foreground mb-1">Username</h2>

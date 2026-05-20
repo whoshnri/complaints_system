@@ -30,22 +30,24 @@ export default function SignUpForm() {
     <form action={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-          Email
+          Email (optional)
         </label>
         <Input
           id="email"
           name="email"
           type="email"
-          placeholder="your@email.com"
-          required
+          placeholder="optional@email.com"
           disabled={loading}
           className="w-full"
         />
+        <p className="text-xs text-muted-foreground mt-1">
+          Only used for password recovery.
+        </p>
       </div>
 
       <div>
         <label htmlFor="username" className="block text-sm font-medium text-foreground mb-2">
-          Username
+          Anonymous Username
         </label>
         <Input
           id="username"

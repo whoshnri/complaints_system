@@ -9,6 +9,9 @@ interface ComplaintCardProps {
   title: string;
   content: string;
   schoolName: string;
+  category?: string;
+  urgency?: string;
+  status?: string;
   createdAt: string;
   upvoteCount: number;
   commentCount: number;
@@ -21,6 +24,9 @@ export default function ComplaintCard({
   title,
   content,
   schoolName,
+  category,
+  urgency,
+  status,
   createdAt,
   upvoteCount,
   commentCount,
@@ -42,6 +48,21 @@ export default function ComplaintCard({
 
             <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
               <span className="font-medium">{schoolName}</span>
+              {category && (
+                <span className="px-2 py-0.5 rounded-full border border-border text-[11px] uppercase tracking-wide">
+                  {category}
+                </span>
+              )}
+              {status && (
+                <span className="px-2 py-0.5 rounded-full bg-secondary text-[11px] uppercase tracking-wide text-foreground">
+                  {status.replace('_', ' ')}
+                </span>
+              )}
+              {urgency && (
+                <span className="text-[11px] uppercase tracking-wide">
+                  {urgency}
+                </span>
+              )}
               <span>{timeAgo}</span>
             </div>
 

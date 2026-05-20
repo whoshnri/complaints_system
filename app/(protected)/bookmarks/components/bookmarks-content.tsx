@@ -5,7 +5,9 @@ import ComplaintCard from '../../feed/components/complaint-card';
 export interface Bookmark {
   id: number;
   title: string;
-  content: string;
+  description: string;
+  category?: string;
+  status?: string;
   school_name: string;
   created_at: string;
   upvote_count?: number;
@@ -32,7 +34,9 @@ export default function BookmarksContent({ bookmarks }: BookmarksContentProps) {
             key={bookmark.id}
             id={bookmark.id.toString()}
             title={bookmark.title}
-            content={bookmark.content}
+            description={bookmark.description}
+            category={bookmark.category}
+            status={bookmark.status}
             schoolName={bookmark.school_name}
             createdAt={bookmark.created_at}
             upvoteCount={bookmark.upvote_count || 0}
