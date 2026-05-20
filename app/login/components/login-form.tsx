@@ -29,14 +29,14 @@ export default function LoginForm() {
   return (
     <form action={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-          Email
+        <label htmlFor="usernameOrEmail" className="block text-sm font-medium text-foreground mb-2">
+          Username or Email
         </label>
         <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="your@email.com"
+          id="usernameOrEmail"
+          name="usernameOrEmail"
+          type="text"
+          placeholder="username or email"
           required
           disabled={loading}
           className="w-full"

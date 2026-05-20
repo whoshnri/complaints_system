@@ -174,18 +174,19 @@ export async function removeBookmarkAction(complaintId: number) {
 export async function createComplaintAction(
   schoolId: number,
   title: string,
-  content: string,
-  isPublic: boolean = true
+  description: string,
+  isPublic: boolean = true,
+  category?: string
 ) {
   try {
     const userId = await getAuthedUserId();
     if (!userId) return { data: null, error: 'Not authenticated' };
 
     if (!title || title.trim().length === 0) return { data: null, error: 'Title is required' };
-    if (!content || content.trim().length === 0) return { data: null, error: 'Content is required' };
-    if (title.length > 255) return { data: null, error: 'Title must be less than 255 characters' };
+    if (!description || description.trim().length === 0) return { data: null, error: 'Description is required' };
+    if (title.length > 200) return { data: null, error: 'Title must be less than 200 characters' };
 
-    const complaint = await createComplaint(userId, schoolId, title, content, isPublic);
+    const complaint = await createComplaint(userId, schoolId, title, description, isPublic, category);
     return { data: complaint, error: null };
   } catch (error) {
     console.error('Error creating complaint:', error);

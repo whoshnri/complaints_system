@@ -11,8 +11,8 @@ export async function signUp(formData: FormData) {
     const confirmPassword = formData.get('confirmPassword') as string;
 
     // Validation
-    if (!email || !username || !password || !confirmPassword) {
-      return { error: 'All fields are required' };
+    if (!username || !password || !confirmPassword) {
+      return { error: 'Username and password are required' };
     }
 
     if (password !== confirmPassword) {
@@ -27,13 +27,16 @@ export async function signUp(formData: FormData) {
       return { error: 'Username must be between 2 and 30 characters' };
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return { error: 'Invalid email address' };
+    // Validate email if provided
+    if (email && email.trim().length > 0) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return { error: 'Invalid email address' };
+      }
     }
 
-    // Register user
-    await registerUser(email, username, password);
+    // Register user with email or null
+    await registerUser(email && email.trim().length > 0 ? email : null, username, password);
 
     // Redirect to feed
     redirect('/feed');
@@ -45,16 +48,16 @@ export async function signUp(formData: FormData) {
 
 export async function signIn(formData: FormData) {
   try {
-    const email = formData.get('email') as string;
+    const usernameOrEmail = formData.get('usernameOrEmail') as string;
     const password = formData.get('password') as string;
 
     // Validation
-    if (!email || !password) {
-      return { error: 'Email and password are required' };
+    if (!usernameOrEmail || !password) {
+      return { error: 'Username/email and password are required' };
     }
 
     // Login user
-    await loginUser(email, password);
+    await loginUser(usernameOrEmail, password);
 
     // Redirect to feed
     redirect('/feed');

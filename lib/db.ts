@@ -59,7 +59,10 @@ function complaintRow(complaint: any, extras: Record<string, unknown> = {}) {
     user_id: toNumberId(complaint.userId),
     school_id: toNumberId(complaint.schoolId),
     title: complaint.title,
-    content: complaint.content,
+    description: complaint.description,
+    category: complaint.category,
+    status: complaint.status,
+    attachment: complaint.attachment,
     is_public: complaint.isPublic,
     created_at: toIsoString(complaint.createdAt),
     school_name: complaint.school?.name,
@@ -84,12 +87,13 @@ function commentRow(comment: any) {
 }
 
 // Users
-export async function createUser(email: string, passwordHash: string, username: string) {
+export async function createUser(email: string | null, passwordHash: string, username: string, role: string = 'student') {
   const user = await prisma.user.create({
     data: {
-      email,
+      email: email || undefined,
       passwordHash,
       username,
+      role,
     },
   });
 
@@ -99,6 +103,14 @@ export async function createUser(email: string, passwordHash: string, username: 
 export async function getUserByEmail(email: string) {
   const user = await prisma.user.findUnique({
     where: { email },
+  });
+
+  return userRow(user, true);
+}
+
+export async function getUserByUsername(username: string) {
+  const user = await prisma.user.findUnique({
+    where: { username },
   });
 
   return userRow(user, true);
@@ -260,16 +272,19 @@ export async function createComplaint(
   userId: number,
   schoolId: number,
   title: string,
-  content: string,
-  isPublic: boolean = true
+  description: string,
+  isPublic: boolean = true,
+  category?: string
 ) {
   const complaint = await prisma.complaint.create({
     data: {
       userId: toBigIntId(userId),
       schoolId: toBigIntId(schoolId),
       title,
-      content,
+      description,
+      category,
       isPublic,
+      status: 'submitted',
     },
     include: {
       school: true,

@@ -9,12 +9,26 @@ interface School {
   name: string;
 }
 
+const COMPLAINT_CATEGORIES = [
+  'Academic',
+  'Administrative',
+  'Facilities',
+  'Financial',
+  'Health & Safety',
+  'Library',
+  'Sports & Recreation',
+  'Student Services',
+  'Technology',
+  'Other',
+];
+
 export default function ComposeForm() {
   const router = useRouter();
   const [schools, setSchools] = useState<School[]>([]);
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | ''>('');
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState<string>('');
   const [isPublic, setIsPublic] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -54,8 +68,9 @@ export default function ComposeForm() {
       const { data, error: actionError } = await createComplaintAction(
         Number(selectedSchoolId),
         title,
-        content,
-        isPublic
+        description,
+        isPublic,
+        category || undefined
       );
 
       if (actionError) {
@@ -85,7 +100,7 @@ export default function ComposeForm() {
     <form onSubmit={handleSubmit} className="divide-y divide-border">
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
-          Select Your School
+          Target School or Department
         </label>
         <select
           value={selectedSchoolId}
@@ -104,6 +119,24 @@ export default function ComposeForm() {
 
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
+          Category
+        </label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full px-3 py-2 bg-input border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="">-- Select a category (optional) --</option>
+          {COMPLAINT_CATEGORIES.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="p-4">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Title
         </label>
         <input
@@ -112,22 +145,22 @@ export default function ComposeForm() {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g., Cafeteria food needs improvement"
           className="w-full px-3 py-2 bg-input border border-border text-foreground placeholder-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-          maxLength={255}
+          maxLength={200}
           required
         />
         <p className="text-xs text-muted-foreground mt-1">
-          {title.length}/255 characters
+          {title.length}/200 characters
         </p>
       </div>
 
       <div className="p-4">
         <label className="block text-sm font-medium text-foreground mb-2">
-          Your Complaint
+          Detailed Description
         </label>
         <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Describe your feedback in detail. Be specific about what needs to change..."
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Describe your complaint in detail. Be specific about what needs to change..."
           className="w-full px-3 py-2 bg-input border border-border text-foreground placeholder-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none h-40"
           required
         />
