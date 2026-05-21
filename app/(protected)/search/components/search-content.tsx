@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { searchComplaintsAction } from '@/app/actions/complaints';
 import ComplaintCard from '../../feed/components/complaint-card';
-import { Search as SearchIcon } from 'lucide-react';
+import { Search as SearchIcon, SearchX } from 'lucide-react';
 
 interface SearchContentProps {
   initialQuery: string;
@@ -51,7 +51,7 @@ export default function SearchContent({ initialQuery }: SearchContentProps) {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex min-h-[calc(100vh-81px)] flex-col bg-background">
       <div className="p-4 border-b border-border">
         <form onSubmit={handleSearch} className="flex gap-2">
           <div className="flex-1 relative">
@@ -66,7 +66,7 @@ export default function SearchContent({ initialQuery }: SearchContentProps) {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-foreground text-background rounded-md hover:bg-primary transition-colors font-medium"
+            className="rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Search
           </button>
@@ -75,16 +75,28 @@ export default function SearchContent({ initialQuery }: SearchContentProps) {
 
       <div className="flex-1 overflow-y-auto">
         {!hasSearched ? (
-          <div className="p-6 text-center text-muted-foreground">
-            <p className="text-sm">Enter a search query to find complaints</p>
+          <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
+            <div className="mb-5 flex size-14 items-center justify-center rounded-lg bg-secondary text-primary">
+              <SearchIcon size={28} />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">Search the complaint record</h2>
+            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              Look up complaints by title, description, category, or keywords students may have used.
+            </p>
           </div>
         ) : loading ? (
           <div className="p-6 text-center text-muted-foreground">
             Searching...
           </div>
         ) : results.length === 0 ? (
-          <div className="p-6 text-center text-muted-foreground">
-            <p className="text-sm">No results found for "{query}"</p>
+          <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
+            <div className="mb-5 flex size-14 items-center justify-center rounded-lg bg-secondary text-primary">
+              <SearchX size={28} />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">No matching complaints</h2>
+            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              We could not find anything for "{query}". Try a school name, category, or a shorter phrase.
+            </p>
           </div>
         ) : (
           <div className="divide-y divide-border">
@@ -93,7 +105,7 @@ export default function SearchContent({ initialQuery }: SearchContentProps) {
                 key={complaint.id}
                 id={complaint.id.toString()}
                 title={complaint.title}
-                description={complaint.description}
+                content={complaint.description}
                 category={complaint.category}
                 status={complaint.status}
                 schoolName={complaint.school_name || 'Unknown School'}

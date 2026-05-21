@@ -6,6 +6,7 @@ import {
   getComplaintsByFollowedSchools,
   getAllSchools,
   getComplaintById,
+  getComplaintsByUser,
   getComments,
   upvoteComplaint,
   removeUpvote,
@@ -19,6 +20,7 @@ import {
   unfollowSchool,
   getUserFollowedSchools,
   isFollowingSchool,
+  updateComplaintStatusForOwner,
 } from '@/lib/db';
 import { Complaint } from '../(protected)/feed/components/feed-content';
 
@@ -36,13 +38,21 @@ export async function getFeedAction() {
   try {
     const userId = await getAuthedUserId();
     if (!userId) {
-      return { data: [], error: 'Not authenticated', empty: false };
+      return { data: [], error: 'Not authenticated', empty: false, followedCount: 0 };
     }
-    const complaints = await getComplaintsByFollowedSchools(String(userId), 30, 0);
-    return { data: complaints as Complaint[], error: null, empty: complaints.length === 0 };
+    const [complaints, followedSchools] = await Promise.all([
+      getComplaintsByFollowedSchools(String(userId), 30, 0),
+      getUserFollowedSchools(String(userId)),
+    ]);
+    return {
+      data: complaints as Complaint[],
+      error: null,
+      empty: complaints.length === 0,
+      followedCount: followedSchools.length,
+    };
   } catch (error) {
     console.error('Error fetching feed:', error);
-    return { data: [], error: 'Failed to load feed', empty: false };
+    return { data: [], error: 'Failed to load feed', empty: false, followedCount: 0 };
   }
 }
 
@@ -111,6 +121,40 @@ export async function getComplaintByIdAction(complaintId: number) {
   } catch (error) {
     console.error('Error fetching complaint:', error);
     return { data: null, error: 'Failed to load complaint' };
+  }
+}
+
+export async function getMyComplaintsAction() {
+  try {
+    const userId = await getAuthedUserId();
+    if (!userId) return { data: [], error: 'Not authenticated' };
+
+    const complaints = await getComplaintsByUser(String(userId));
+    return { data: complaints, error: null };
+  } catch (error) {
+    console.error('Error fetching submitted complaints:', error);
+    return { data: [], error: 'Failed to load submitted complaints' };
+  }
+}
+
+export async function updateOwnComplaintStatusAction(
+  complaintId: number,
+  status: 'resolved' | 'unresolved'
+) {
+  try {
+    const userId = await getAuthedUserId();
+    if (!userId) return { data: null, error: 'Not authenticated' };
+    if (status !== 'resolved' && status !== 'unresolved') {
+      return { data: null, error: 'Invalid complaint status' };
+    }
+
+    const complaint = await updateComplaintStatusForOwner(complaintId, userId, status);
+    if (!complaint) return { data: null, error: 'Only the complaint owner can update this status' };
+
+    return { data: complaint, error: null };
+  } catch (error) {
+    console.error('Error updating own complaint status:', error);
+    return { data: null, error: 'Failed to update complaint status' };
   }
 }
 

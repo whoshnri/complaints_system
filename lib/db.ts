@@ -25,6 +25,8 @@ function userRow(user: any, includePassword = false) {
     username: user.username,
     role: user.role,
     school_id: toNumberId(user.schoolId),
+    is_school_account: user.isSchoolAccount,
+    verified_school: user.verifiedSchool,
     ...(includePassword ? { password_hash: user.passwordHash } : {}),
     created_at: toIsoString(user.createdAt),
   };
@@ -59,7 +61,7 @@ function schoolRow(school: any) {
     description: school.description,
     total_complaints: school._count?.complaints ?? school.complaintCount ?? 0,
     resolved_complaints: statusCounts.resolved ?? 0,
-    pending_complaints: (statusCounts.submitted ?? 0) + (statusCounts.under_review ?? 0),
+    pending_complaints: statusCounts.unresolved ?? 0,
     response_rate:
       (school._count?.complaints ?? school.complaintCount ?? 0) > 0
         ? Math.round(
@@ -111,7 +113,7 @@ export async function createUser(
   passwordHash: string,
   username: string,
   email?: string,
-  role: 'student' | 'admin' = 'student',
+  role: 'student' | 'school' = 'student',
   schoolId?: number
 ) {
   const user = await prisma.user.create({
@@ -120,7 +122,8 @@ export async function createUser(
       passwordHash,
       username,
       role,
-      isSchoolAdmin: role === 'admin',
+      isSchoolAccount: role === 'school',
+      verifiedSchool: false,
       schoolId: schoolId == null ? null : toBigIntId(schoolId),
     },
   });
@@ -138,6 +141,7 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function getUserByUsername(username: string) {
+  if (!username) return null;
   const user = await prisma.user.findUnique({
     where: { username },
   });
@@ -179,6 +183,24 @@ export async function getSessionByToken(token: string) {
   return sessionRow(session);
 }
 
+export async function getUserBySessionToken(token: string) {
+  if (!token) return null;
+
+  const session = await prisma.session.findFirst({
+    where: {
+      sessionToken: token,
+      expiresAt: {
+        gt: new Date(),
+      },
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return userRow(session?.user);
+}
+
 export async function deleteSession(token: string) {
   await prisma.session.deleteMany({
     where: { sessionToken: token },
@@ -195,6 +217,51 @@ export async function createSchool(name: string, description?: string) {
   });
 
   return schoolRow(school);
+}
+
+export async function createSchoolAccount({
+  schoolName,
+  faculty,
+  description,
+  username,
+  email,
+  passwordHash,
+}: {
+  schoolName: string;
+  faculty?: string;
+  description?: string;
+  username: string;
+  email?: string;
+  passwordHash: string;
+}) {
+  const result = await prisma.$transaction(async (tx) => {
+    const school = await tx.school.create({
+      data: {
+        name: schoolName,
+        faculty: faculty || null,
+        description: description || null,
+      },
+    });
+
+    const user = await tx.user.create({
+      data: {
+        email,
+        passwordHash,
+        username,
+        role: 'school',
+        isSchoolAccount: true,
+        verifiedSchool: false,
+        schoolId: school.id,
+      },
+    });
+
+    return { school, user };
+  });
+
+  return {
+    school: schoolRow(result.school),
+    user: userRow(result.user),
+  };
 }
 
 export async function getAllSchools() {
@@ -328,7 +395,7 @@ export async function createComplaint(
       description,
       category,
       urgency,
-      status: 'submitted',
+      status: 'unresolved',
       isPublic: true,
     },
     include: {
@@ -374,6 +441,7 @@ export async function getComplaintById(complaintId: number, userId?: number | nu
   return complaintRow(complaint, {
     user_upvoted: userUpvoted,
     user_bookmarked: userBookmarked,
+    user_is_owner: userId ? Number(complaint.userId) === Number(userId) : false,
   });
 }
 
@@ -403,6 +471,171 @@ export async function getComplaints(
   });
 
   return complaints.map((complaint) => complaintRow(complaint));
+}
+
+export async function getComplaintsBySchoolForAdmin(schoolId: IdInput, limit: number = 100) {
+  const complaints = await prisma.complaint.findMany({
+    where: {
+      schoolId: toBigIntId(schoolId),
+      deletedAt: null,
+    },
+    include: {
+      school: true,
+      _count: {
+        select: {
+          upvotes: true,
+          comments: true,
+        },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+  });
+
+  return complaints.map((complaint) => complaintRow(complaint));
+}
+
+export async function getSchoolDashboardData(schoolId: IdInput) {
+  const [school, complaints] = await Promise.all([
+    prisma.school.findUnique({
+      where: { id: toBigIntId(schoolId) },
+    }),
+    prisma.complaint.findMany({
+      where: {
+        schoolId: toBigIntId(schoolId),
+        deletedAt: null,
+      },
+      include: {
+        school: true,
+        _count: {
+          select: {
+            upvotes: true,
+            comments: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
+
+  const statusCounts = complaints.reduce(
+    (acc: Record<string, number>, complaint) => {
+      acc[complaint.status] = (acc[complaint.status] ?? 0) + 1;
+      return acc;
+    },
+    {}
+  );
+  const total = complaints.length;
+  const resolved = statusCounts.resolved ?? 0;
+  const unresolved = statusCounts.unresolved ?? 0;
+
+  return {
+    school: school
+      ? schoolRow({
+          ...school,
+          _count: { complaints: total },
+          complaints,
+        })
+      : null,
+    stats: {
+      total,
+      unresolved,
+      resolved,
+      response_rate: total > 0 ? Math.round((resolved / total) * 100) : 0,
+    },
+    recent_complaints: complaints.slice(0, 6).map((complaint) => complaintRow(complaint)),
+  };
+}
+
+export async function updateComplaintStatusForOwner(
+  complaintId: IdInput,
+  userId: IdInput,
+  status: 'resolved' | 'unresolved'
+) {
+  await prisma.complaint.updateMany({
+    where: {
+      id: toBigIntId(complaintId),
+      userId: toBigIntId(userId),
+      deletedAt: null,
+    },
+    data: { status },
+  });
+
+  const complaint = await prisma.complaint.findFirst({
+    where: {
+      id: toBigIntId(complaintId),
+      userId: toBigIntId(userId),
+      deletedAt: null,
+    },
+    include: {
+      school: true,
+      _count: {
+        select: {
+          upvotes: true,
+          comments: true,
+        },
+      },
+    },
+  });
+
+  return complaintRow(complaint);
+}
+
+export async function getComplaintForSchoolAdmin(complaintId: IdInput, schoolId: IdInput) {
+  const complaint = await prisma.complaint.findFirst({
+    where: {
+      id: toBigIntId(complaintId),
+      schoolId: toBigIntId(schoolId),
+      deletedAt: null,
+    },
+    include: {
+      school: true,
+      _count: {
+        select: {
+          upvotes: true,
+          comments: true,
+        },
+      },
+    },
+  });
+
+  return complaintRow(complaint);
+}
+
+export async function createAdminCommentForSchool(
+  complaintId: IdInput,
+  adminId: IdInput,
+  schoolId: IdInput,
+  content: string
+) {
+  const complaint = await prisma.complaint.findFirst({
+    where: {
+      id: toBigIntId(complaintId),
+      schoolId: toBigIntId(schoolId),
+      deletedAt: null,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!complaint) {
+    return null;
+  }
+
+  const comment = await prisma.comment.create({
+    data: {
+      complaintId: complaint.id,
+      userId: toBigIntId(adminId),
+      content,
+      isAdminReply: true,
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return commentRow(comment);
 }
 
 export async function getComplaintsByUser(userId: string) {

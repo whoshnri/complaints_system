@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { MessagesSquare } from 'lucide-react';
 import { createCommentAction, getCommentsAction } from '@/app/actions/complaints';
 import CommentCard from './comment-card';
 
@@ -77,7 +78,7 @@ export default function CommentsSection({ complaintId }: CommentsSectionProps) {
           <button
             type="submit"
             disabled={posting}
-            className="px-4 py-2 bg-foreground text-background rounded-md hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {posting ? 'Posting...' : 'Post Contribution'}
           </button>
@@ -85,8 +86,14 @@ export default function CommentsSection({ complaintId }: CommentsSectionProps) {
       </form>
 
       {comments.length === 0 ? (
-        <div className="p-6 text-center text-muted-foreground text-sm">
-          No comments yet. Be the first to share your thoughts.
+        <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
+          <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-secondary text-primary">
+            <MessagesSquare size={24} />
+          </div>
+          <h3 className="text-base font-semibold text-foreground">No contributions yet</h3>
+          <p className="mt-2 max-w-md text-sm text-muted-foreground">
+            Add context, supporting details, or a related experience to help the school understand the issue.
+          </p>
         </div>
       ) : (
         comments.map((comment) => (

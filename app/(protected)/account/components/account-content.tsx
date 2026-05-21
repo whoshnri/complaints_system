@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { logoutAction } from '@/app/actions/auth';
-import { LogOut, Bookmark, GraduationCap } from 'lucide-react';
+import { LogOut, Bookmark, GraduationCap, UserX } from 'lucide-react';
 
 export interface User {
   id: number;
@@ -30,8 +30,14 @@ export default function AccountContent({ user }: AccountContentProps) {
 
   if (!user) {
     return (
-      <div className="p-4 text-center text-muted-foreground">
-        Loading account information...
+      <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
+        <div className="mb-5 flex size-14 items-center justify-center rounded-lg bg-secondary text-primary">
+          <UserX size={28} />
+        </div>
+        <h2 className="text-lg font-semibold text-foreground">Account details unavailable</h2>
+        <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          Your session is active, but we could not load the linked anonymous profile. Sign out and log back in to refresh access.
+        </p>
       </div>
     );
   }

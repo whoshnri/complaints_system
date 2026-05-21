@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { BellPlus, GraduationCap } from 'lucide-react';
 import ComplaintCard from './complaint-card';
 
 export interface Complaint {
@@ -19,20 +20,23 @@ export interface Complaint {
 interface FeedContentProps {
   initialComplaints: Complaint[];
   isEmpty: boolean;
+  followedCount: number;
 }
 
-export default function FeedContent({ initialComplaints, isEmpty }: FeedContentProps) {
-  if (isEmpty) {
+export default function FeedContent({ initialComplaints, isEmpty, followedCount }: FeedContentProps) {
+  if (isEmpty && followedCount === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
-        <div className="text-4xl mb-4">🏫</div>
+      <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
+        <div className="mb-5 flex size-14 items-center justify-center rounded-lg bg-secondary text-primary">
+          <GraduationCap size={28} />
+        </div>
         <h2 className="text-lg font-semibold text-foreground mb-2">No schools followed yet</h2>
         <p className="text-sm text-muted-foreground mb-6">
-          Follow schools to see their complaints here in your feed.
+          Choose the schools you care about and this feed will become your live complaint stream.
         </p>
         <Link
           href="/schools"
-          className="px-5 py-2 bg-foreground text-background text-sm font-semibold rounded-full hover:bg-foreground/80 transition-colors"
+          className="rounded-md bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           Browse Schools
         </Link>
@@ -42,8 +46,14 @@ export default function FeedContent({ initialComplaints, isEmpty }: FeedContentP
 
   if (initialComplaints.length === 0) {
     return (
-      <div className="py-16 text-center text-muted-foreground">
-        <p className="text-sm">No complaints yet from schools you follow.</p>
+      <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
+        <div className="mb-5 flex size-14 items-center justify-center rounded-lg bg-secondary text-primary">
+          <BellPlus size={28} />
+        </div>
+        <h2 className="text-lg font-semibold text-foreground">No complaints from followed schools yet</h2>
+        <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          You are following {followedCount} {followedCount === 1 ? 'school' : 'schools'}, but no public complaints have been posted for them yet.
+        </p>
       </div>
     );
   }

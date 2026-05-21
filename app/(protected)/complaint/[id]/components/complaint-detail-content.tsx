@@ -1,8 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, MessageSquare, Bookmark } from 'lucide-react';
-import { upvoteComplaintAction, removeUpvoteAction, bookmarkComplaintAction, removeBookmarkAction } from '@/app/actions/complaints';
+import { Heart, MessageSquare, Bookmark, CheckCircle2 } from 'lucide-react';
+import {
+  upvoteComplaintAction,
+  removeUpvoteAction,
+  bookmarkComplaintAction,
+  removeBookmarkAction,
+  updateOwnComplaintStatusAction,
+} from '@/app/actions/complaints';
 import CommentsSection from './comments-section';
 
 interface ComplaintDetailContentProps {
@@ -13,6 +19,9 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
   const [isUpvoted, setIsUpvoted] = useState(complaint.user_upvoted || false);
   const [isBookmarked, setIsBookmarked] = useState(complaint.user_bookmarked || false);
   const [upvoteCount, setUpvoteCount] = useState(complaint.upvote_count || 0);
+  const [status, setStatus] = useState<'resolved' | 'unresolved'>(complaint.status || 'unresolved');
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [updatingStatus, setUpdatingStatus] = useState(false);
 
   const handleUpvote = async () => {
     try {
@@ -27,6 +36,21 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
     } catch (error) {
       console.error('Failed to update upvote:', error);
     }
+  };
+
+  const handleStatusChange = async (nextStatus: 'resolved' | 'unresolved') => {
+    setUpdatingStatus(true);
+    setStatusMessage(null);
+
+    const result = await updateOwnComplaintStatusAction(complaint.id, nextStatus);
+    if (result.error) {
+      setStatusMessage(result.error);
+    } else {
+      setStatus(nextStatus);
+      setStatusMessage(`Marked as ${nextStatus}.`);
+    }
+
+    setUpdatingStatus(false);
   };
 
   const handleBookmark = async () => {
@@ -52,17 +76,15 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
     });
   };
 
-  // Map status to display format
-  const statusDisplay = complaint.status ? complaint.status.replace('_', ' ').toUpperCase() : 'SUBMITTED';
-  const statusColor = {
-    submitted: 'text-muted-foreground bg-secondary',
-    under_review: 'text-blue-600 bg-blue-50 dark:bg-blue-950',
+  const statusDisplay = status.toUpperCase();
+  const statusColors: Record<string, string> = {
     resolved: 'text-green-600 bg-green-50 dark:bg-green-950',
-    dismissed: 'text-red-600 bg-red-50 dark:bg-red-950',
-  }[complaint.status || 'submitted'] || 'text-muted-foreground bg-secondary';
+    unresolved: 'text-primary bg-secondary',
+  };
+  const statusColor = statusColors[status] || 'text-muted-foreground bg-secondary';
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex min-h-[calc(100vh-81px)] flex-col bg-background">
       <article className="flex-1 overflow-y-auto">
         <div className="p-4 border-b border-border">
           <div className="flex items-center justify-between mb-3">
@@ -80,14 +102,9 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
                 {complaint.category}
               </span>
             )}
-            {complaint.urgency && (
-              <span className="text-xs px-2 py-0.5 rounded-full border border-border uppercase tracking-wide">
-                {complaint.urgency}
-              </span>
-            )}
-            {complaint.status && (
+            {status && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-secondary uppercase tracking-wide">
-                {complaint.status.replace('_', ' ')}
+                {status}
               </span>
             )}
           </div>
@@ -96,27 +113,53 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
             {complaint.title}
           </h1>
 
-          <div className="flex items-center gap-2 mb-4">
-            {complaint.category && (
-              <span className="px-2 py-1 text-xs font-medium bg-secondary text-foreground rounded">
-                {complaint.category}
-              </span>
-            )}
-            <span className={`px-2 py-1 text-xs font-medium rounded ${statusColor}`}>
-              {statusDisplay}
-            </span>
-          </div>
+          
 
           <p className="text-sm text-muted-foreground mb-6 whitespace-pre-wrap">
-            {complaint.description}
+            {complaint.content}
           </p>
+
+          {complaint.user_is_owner && (
+            <div className="mb-6 rounded-lg border border-border bg-secondary/30 p-4">
+              <div className="flex items-start gap-3">
+                
+                <div className="flex-1">
+                  <h2 className="text-sm font-semibold text-foreground">You own this complaint</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Only you can mark this complaint resolved or unresolved.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      disabled={updatingStatus || status === 'unresolved'}
+                      onClick={() => handleStatusChange('unresolved')}
+                      className="rounded-md border border-border px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-background disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      Mark unresolved
+                    </button>
+                    <button
+                      type="button"
+                      disabled={updatingStatus || status === 'resolved'}
+                      onClick={() => handleStatusChange('resolved')}
+                      className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      Mark resolved
+                    </button>
+                  </div>
+                  {statusMessage && (
+                    <p className="mt-3 text-xs font-medium text-muted-foreground">{statusMessage}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="flex items-center gap-6 py-3 border-t border-b border-border">
             <button
               onClick={handleUpvote}
               className={`flex items-center gap-2 text-sm transition-colors ${
                 isUpvoted
-                  ? 'text-foreground font-medium'
+                  ? 'text-primary font-medium'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -133,7 +176,7 @@ export default function ComplaintDetailContent({ complaint }: ComplaintDetailCon
               onClick={handleBookmark}
               className={`flex items-center gap-2 text-sm transition-colors ml-auto ${
                 isBookmarked
-                  ? 'text-foreground font-medium'
+                  ? 'text-primary font-medium'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >

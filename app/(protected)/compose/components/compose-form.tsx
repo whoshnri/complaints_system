@@ -188,7 +188,7 @@ export default function ComposeForm() {
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 px-4 py-2 bg-foreground text-background rounded-md hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          className="flex-1 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? 'Posting...' : 'Post Complaint'}
         </button>

@@ -8,15 +8,19 @@ export const metadata: Metadata = {
 };
 
 export default async function FeedPage() {
-  const { data: complaints, empty } = await getFeedAction();
+  const { data: complaints, empty, followedCount } = await getFeedAction();
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-4 z-10">
+    <div className="mx-auto min-h-screen w-full max-w-4xl bg-background md:border-x md:border-border">
+      <div className="sticky top-0 z-10 border-b border-border bg-background/95 px-5 py-5 backdrop-blur">
         <h1 className="text-2xl font-bold text-foreground">Feed</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Complaints from schools you follow</p>
       </div>
-      <FeedContent initialComplaints={complaints ?? []} isEmpty={empty ?? false} />
+      <FeedContent
+        initialComplaints={complaints ?? []}
+        isEmpty={empty ?? false}
+        followedCount={followedCount ?? 0}
+      />
     </div>
   );
 }

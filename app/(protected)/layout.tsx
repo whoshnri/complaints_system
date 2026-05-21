@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import BottomNav from './components/bottom-nav';
 import FloatingCompose from './components/floating-compose';
+import SidebarNav from './components/sidebar-nav';
 import { getSessionUser } from '@/lib/auth';
 
 export const metadata: Metadata = {
@@ -23,8 +24,9 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <div className="flex flex-col min-h-screen max-w-2xl mx-auto bg-background">
-      <main className="flex-1 overflow-y-auto pb-20">
+    <div className="min-h-screen bg-secondary/30 text-foreground">
+      <SidebarNav />
+      <main className="min-h-screen pb-24 md:pl-72 md:pb-0">
         {children}
       </main>
       <BottomNav />

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getComplaintByIdAction } from '@/app/actions/complaints';
 import ComplaintDetailContent from './components/complaint-detail-content';
+import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Complaint - VoiceIt',
@@ -17,10 +18,10 @@ export default async function ComplaintPage({ params }: { params: Promise<{ id: 
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-4 z-10">
-        <a href="/feed" className="text-sm text-muted-foreground hover:text-foreground mb-2 block">
-          ← Back to Feed
+    <div className="mx-auto min-h-screen w-full max-w-3xl bg-background md:border-x md:border-border">
+      <div className="sticky top-0 z-10 border-b border-border bg-background/95 px-5 py-5 backdrop-blur">
+        <a href="/feed" className="text-sm flex items-center text-muted-foreground hover:text-foreground mb-2 gap-1 block border w-fit rounded hover:bg-secondary/50 px-2 py-1">
+         <ArrowLeft size={20} /> Back to Feed
         </a>
       </div>
 

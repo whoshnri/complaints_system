@@ -18,8 +18,8 @@ export default async function SchoolsPage() {
   const followedSchoolIds = (followed ?? []).map((s: any) => s.id as number);
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-4 z-10">
+    <div className="mx-auto min-h-screen w-full max-w-4xl bg-background md:border-x md:border-border">
+      <div className="sticky top-0 z-10 border-b border-border bg-background/95 px-5 py-5 backdrop-blur">
         <h1 className="text-2xl font-bold text-foreground">Schools</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Follow schools to see their complaints in your feed

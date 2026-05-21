@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const ComplaintStatus = {
+  unresolved: 'unresolved',
+  resolved: 'resolved'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type ComplaintStatus = (typeof ComplaintStatus)[keyof typeof ComplaintStatus]

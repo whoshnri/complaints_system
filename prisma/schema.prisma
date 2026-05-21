@@ -8,6 +8,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ComplaintStatus {
+  unresolved
+  resolved
+}
+
 model User {
   id            BigInt    @id @default(autoincrement())
   username      String    @unique @db.VarChar(50)
@@ -16,7 +21,8 @@ model User {
   role          String    @default("student") @db.VarChar(20)
   displayName   String?   @map("display_name") @db.VarChar(100)
   bio           String?
-  isSchoolAdmin Boolean   @default(false) @map("is_school_admin")
+  isSchoolAccount Boolean @default(false) @map("is_school_admin")
+  verifiedSchool Boolean  @default(false) @map("verified_admin")
   schoolId      BigInt?   @map("school_id")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
@@ -64,7 +70,7 @@ model School {
   updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at")
   deletedAt      DateTime? @map("deleted_at")
 
-  admins     User[]
+  accounts   User[]
   complaints Complaint[]
   followers  SchoolFollower[]
 
@@ -79,7 +85,7 @@ model Complaint {
   description  String    @map("description")
   category     String?   @db.VarChar(50)
   urgency      String    @default("medium") @db.VarChar(20)
-  status       String    @default("submitted") @db.VarChar(20)
+  status       ComplaintStatus @default(unresolved)
   isAnonymous  Boolean   @default(true) @map("is_anonymous")
   isPublic     Boolean   @default(true) @map("is_public")
   upvoteCount  Int       @default(0) @map("upvote_count")

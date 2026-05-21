@@ -7,7 +7,7 @@ export default function FloatingCompose() {
   return (
     <Link
       href="/compose"
-      className="fixed bottom-24 right-6 w-14 h-14 bg-foreground text-primary-foreground rounded flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
+      className="fixed bottom-24 right-6 z-40 flex size-14 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-lg transition-shadow hover:shadow-xl md:hidden"
       aria-label="Compose new complaint"
     >
       <Plus size={24} />

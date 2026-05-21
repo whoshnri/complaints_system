@@ -50,7 +50,7 @@ export type ComplaintMinAggregateOutputType = {
   description: string | null
   category: string | null
   urgency: string | null
-  status: string | null
+  status: $Enums.ComplaintStatus | null
   isAnonymous: boolean | null
   isPublic: boolean | null
   upvoteCount: number | null
@@ -69,7 +69,7 @@ export type ComplaintMaxAggregateOutputType = {
   description: string | null
   category: string | null
   urgency: string | null
-  status: string | null
+  status: $Enums.ComplaintStatus | null
   isAnonymous: boolean | null
   isPublic: boolean | null
   upvoteCount: number | null
@@ -269,7 +269,7 @@ export type ComplaintGroupByOutputType = {
   description: string
   category: string | null
   urgency: string
-  status: string
+  status: $Enums.ComplaintStatus
   isAnonymous: boolean
   isPublic: boolean
   upvoteCount: number
@@ -311,7 +311,7 @@ export type ComplaintWhereInput = {
   description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
   urgency?: Prisma.StringFilter<"Complaint"> | string
-  status?: Prisma.StringFilter<"Complaint"> | string
+  status?: Prisma.EnumComplaintStatusFilter<"Complaint"> | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntFilter<"Complaint"> | number
@@ -362,7 +362,7 @@ export type ComplaintWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
   urgency?: Prisma.StringFilter<"Complaint"> | string
-  status?: Prisma.StringFilter<"Complaint"> | string
+  status?: Prisma.EnumComplaintStatusFilter<"Complaint"> | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntFilter<"Complaint"> | number
@@ -413,7 +413,7 @@ export type ComplaintScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
   urgency?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Complaint"> | string
+  status?: Prisma.EnumComplaintStatusWithAggregatesFilter<"Complaint"> | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolWithAggregatesFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolWithAggregatesFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntWithAggregatesFilter<"Complaint"> | number
@@ -430,7 +430,7 @@ export type ComplaintCreateInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -454,7 +454,7 @@ export type ComplaintUncheckedCreateInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -474,7 +474,7 @@ export type ComplaintUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -498,7 +498,7 @@ export type ComplaintUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -520,7 +520,7 @@ export type ComplaintCreateManyInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -537,7 +537,7 @@ export type ComplaintUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -556,7 +556,7 @@ export type ComplaintUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -739,6 +739,10 @@ export type ComplaintUncheckedUpdateManyWithoutSchoolNestedInput = {
   deleteMany?: Prisma.ComplaintScalarWhereInput | Prisma.ComplaintScalarWhereInput[]
 }
 
+export type EnumComplaintStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ComplaintStatus
+}
+
 export type ComplaintCreateNestedOneWithoutCommentsInput = {
   create?: Prisma.XOR<Prisma.ComplaintCreateWithoutCommentsInput, Prisma.ComplaintUncheckedCreateWithoutCommentsInput>
   connectOrCreate?: Prisma.ComplaintCreateOrConnectWithoutCommentsInput
@@ -787,7 +791,7 @@ export type ComplaintCreateWithoutUserInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -809,7 +813,7 @@ export type ComplaintUncheckedCreateWithoutUserInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -860,7 +864,7 @@ export type ComplaintScalarWhereInput = {
   description?: Prisma.StringFilter<"Complaint"> | string
   category?: Prisma.StringNullableFilter<"Complaint"> | string | null
   urgency?: Prisma.StringFilter<"Complaint"> | string
-  status?: Prisma.StringFilter<"Complaint"> | string
+  status?: Prisma.EnumComplaintStatusFilter<"Complaint"> | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFilter<"Complaint"> | boolean
   isPublic?: Prisma.BoolFilter<"Complaint"> | boolean
   upvoteCount?: Prisma.IntFilter<"Complaint"> | number
@@ -877,7 +881,7 @@ export type ComplaintCreateWithoutSchoolInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -899,7 +903,7 @@ export type ComplaintUncheckedCreateWithoutSchoolInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -945,7 +949,7 @@ export type ComplaintCreateWithoutCommentsInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -968,7 +972,7 @@ export type ComplaintUncheckedCreateWithoutCommentsInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1003,7 +1007,7 @@ export type ComplaintUpdateWithoutCommentsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1026,7 +1030,7 @@ export type ComplaintUncheckedUpdateWithoutCommentsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1045,7 +1049,7 @@ export type ComplaintCreateWithoutBookmarksInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1068,7 +1072,7 @@ export type ComplaintUncheckedCreateWithoutBookmarksInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1103,7 +1107,7 @@ export type ComplaintUpdateWithoutBookmarksInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1126,7 +1130,7 @@ export type ComplaintUncheckedUpdateWithoutBookmarksInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1145,7 +1149,7 @@ export type ComplaintCreateWithoutUpvotesInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1168,7 +1172,7 @@ export type ComplaintUncheckedCreateWithoutUpvotesInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1203,7 +1207,7 @@ export type ComplaintUpdateWithoutUpvotesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1226,7 +1230,7 @@ export type ComplaintUncheckedUpdateWithoutUpvotesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1246,7 +1250,7 @@ export type ComplaintCreateManyUserInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1263,7 +1267,7 @@ export type ComplaintUpdateWithoutUserInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1285,7 +1289,7 @@ export type ComplaintUncheckedUpdateWithoutUserInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1306,7 +1310,7 @@ export type ComplaintUncheckedUpdateManyWithoutUserInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1324,7 +1328,7 @@ export type ComplaintCreateManySchoolInput = {
   description: string
   category?: string | null
   urgency?: string
-  status?: string
+  status?: $Enums.ComplaintStatus
   isAnonymous?: boolean
   isPublic?: boolean
   upvoteCount?: number
@@ -1341,7 +1345,7 @@ export type ComplaintUpdateWithoutSchoolInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1363,7 +1367,7 @@ export type ComplaintUncheckedUpdateWithoutSchoolInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1384,7 +1388,7 @@ export type ComplaintUncheckedUpdateManyWithoutSchoolInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
   isAnonymous?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1565,7 +1569,7 @@ export type $ComplaintPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     description: string
     category: string | null
     urgency: string
-    status: string
+    status: $Enums.ComplaintStatus
     isAnonymous: boolean
     isPublic: boolean
     upvoteCount: number
@@ -2009,7 +2013,7 @@ export interface ComplaintFieldRefs {
   readonly description: Prisma.FieldRef<"Complaint", 'String'>
   readonly category: Prisma.FieldRef<"Complaint", 'String'>
   readonly urgency: Prisma.FieldRef<"Complaint", 'String'>
-  readonly status: Prisma.FieldRef<"Complaint", 'String'>
+  readonly status: Prisma.FieldRef<"Complaint", 'ComplaintStatus'>
   readonly isAnonymous: Prisma.FieldRef<"Complaint", 'Boolean'>
   readonly isPublic: Prisma.FieldRef<"Complaint", 'Boolean'>
   readonly upvoteCount: Prisma.FieldRef<"Complaint", 'Int'>

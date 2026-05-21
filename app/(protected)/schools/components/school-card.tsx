@@ -56,9 +56,9 @@ export default function SchoolCard({ school, isFollowed: initialFollowed }: Scho
       <button
         onClick={handleToggle}
         disabled={loading}
-        className={`shrink-0 px-4 py-1.5 text-xs font-semibold rounded-full border transition-all disabled:opacity-50 ${isFollowed
-            ? 'bg-foreground text-background border-foreground hover:bg-foreground/80'
-            : 'bg-transparent text-foreground border-border hover:bg-secondary'
+        className={`shrink-0 rounded-md border px-4 py-1.5 text-xs font-semibold transition-all disabled:opacity-50 ${isFollowed
+            ? 'border-primary bg-primary text-primary-foreground hover:bg-primary/90'
+            : 'border-border bg-transparent text-foreground hover:border-primary/40 hover:bg-secondary'
           }`}
       >
         {loading ? '...' : isFollowed ? 'Following' : 'Follow'}

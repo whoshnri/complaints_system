@@ -28,7 +28,7 @@ export default function CommentCard({ comment }: CommentCardProps) {
               {comment.username || 'Anonymous'}
             </span>
             {comment.is_admin_reply && (
-              <span className="text-xs font-bold px-2 py-0.5 bg-foreground text-background">
+              <span className="bg-primary px-2 py-0.5 text-xs font-bold text-primary-foreground">
                 ADMIN
               </span>
             )}

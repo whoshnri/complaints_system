@@ -44,7 +44,8 @@ export type UserMinAggregateOutputType = {
   role: string | null
   displayName: string | null
   bio: string | null
-  isSchoolAdmin: boolean | null
+  isSchoolAccount: boolean | null
+  verifiedSchool: boolean | null
   schoolId: bigint | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,7 +60,8 @@ export type UserMaxAggregateOutputType = {
   role: string | null
   displayName: string | null
   bio: string | null
-  isSchoolAdmin: boolean | null
+  isSchoolAccount: boolean | null
+  verifiedSchool: boolean | null
   schoolId: bigint | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -74,7 +76,8 @@ export type UserCountAggregateOutputType = {
   role: number
   displayName: number
   bio: number
-  isSchoolAdmin: number
+  isSchoolAccount: number
+  verifiedSchool: number
   schoolId: number
   createdAt: number
   updatedAt: number
@@ -101,7 +104,8 @@ export type UserMinAggregateInputType = {
   role?: true
   displayName?: true
   bio?: true
-  isSchoolAdmin?: true
+  isSchoolAccount?: true
+  verifiedSchool?: true
   schoolId?: true
   createdAt?: true
   updatedAt?: true
@@ -116,7 +120,8 @@ export type UserMaxAggregateInputType = {
   role?: true
   displayName?: true
   bio?: true
-  isSchoolAdmin?: true
+  isSchoolAccount?: true
+  verifiedSchool?: true
   schoolId?: true
   createdAt?: true
   updatedAt?: true
@@ -131,7 +136,8 @@ export type UserCountAggregateInputType = {
   role?: true
   displayName?: true
   bio?: true
-  isSchoolAdmin?: true
+  isSchoolAccount?: true
+  verifiedSchool?: true
   schoolId?: true
   createdAt?: true
   updatedAt?: true
@@ -233,7 +239,8 @@ export type UserGroupByOutputType = {
   role: string
   displayName: string | null
   bio: string | null
-  isSchoolAdmin: boolean
+  isSchoolAccount: boolean
+  verifiedSchool: boolean
   schoolId: bigint | null
   createdAt: Date
   updatedAt: Date
@@ -271,7 +278,8 @@ export type UserWhereInput = {
   role?: Prisma.StringFilter<"User"> | string
   displayName?: Prisma.StringNullableFilter<"User"> | string | null
   bio?: Prisma.StringNullableFilter<"User"> | string | null
-  isSchoolAdmin?: Prisma.BoolFilter<"User"> | boolean
+  isSchoolAccount?: Prisma.BoolFilter<"User"> | boolean
+  verifiedSchool?: Prisma.BoolFilter<"User"> | boolean
   schoolId?: Prisma.BigIntNullableFilter<"User"> | bigint | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -293,7 +301,8 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
-  isSchoolAdmin?: Prisma.SortOrder
+  isSchoolAccount?: Prisma.SortOrder
+  verifiedSchool?: Prisma.SortOrder
   schoolId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -318,7 +327,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.StringFilter<"User"> | string
   displayName?: Prisma.StringNullableFilter<"User"> | string | null
   bio?: Prisma.StringNullableFilter<"User"> | string | null
-  isSchoolAdmin?: Prisma.BoolFilter<"User"> | boolean
+  isSchoolAccount?: Prisma.BoolFilter<"User"> | boolean
+  verifiedSchool?: Prisma.BoolFilter<"User"> | boolean
   schoolId?: Prisma.BigIntNullableFilter<"User"> | bigint | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -340,7 +350,8 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
-  isSchoolAdmin?: Prisma.SortOrder
+  isSchoolAccount?: Prisma.SortOrder
+  verifiedSchool?: Prisma.SortOrder
   schoolId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -363,7 +374,8 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
   displayName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  isSchoolAdmin?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  isSchoolAccount?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  verifiedSchool?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   schoolId?: Prisma.BigIntNullableWithAggregatesFilter<"User"> | bigint | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -378,7 +390,8 @@ export type UserCreateInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -388,7 +401,7 @@ export type UserCreateInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
   followedSchools?: Prisma.SchoolFollowerCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -399,7 +412,8 @@ export type UserUncheckedCreateInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -420,7 +434,8 @@ export type UserUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -430,7 +445,7 @@ export type UserUpdateInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
   followedSchools?: Prisma.SchoolFollowerUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -441,7 +456,8 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,7 +478,8 @@ export type UserCreateManyInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -477,7 +494,8 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -491,7 +509,8 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -506,7 +525,8 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
-  isSchoolAdmin?: Prisma.SortOrder
+  isSchoolAccount?: Prisma.SortOrder
+  verifiedSchool?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -526,7 +546,8 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
-  isSchoolAdmin?: Prisma.SortOrder
+  isSchoolAccount?: Prisma.SortOrder
+  verifiedSchool?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -541,7 +562,8 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
-  isSchoolAdmin?: Prisma.SortOrder
+  isSchoolAccount?: Prisma.SortOrder
+  verifiedSchool?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -747,7 +769,8 @@ export type UserCreateWithoutSessionsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -756,7 +779,7 @@ export type UserCreateWithoutSessionsInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
   followedSchools?: Prisma.SchoolFollowerCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -767,7 +790,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -803,7 +827,8 @@ export type UserUpdateWithoutSessionsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -812,7 +837,7 @@ export type UserUpdateWithoutSessionsInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
   followedSchools?: Prisma.SchoolFollowerUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -823,7 +848,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -843,7 +869,8 @@ export type UserCreateWithoutSchoolInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -863,7 +890,8 @@ export type UserUncheckedCreateWithoutSchoolInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -912,7 +940,8 @@ export type UserScalarWhereInput = {
   role?: Prisma.StringFilter<"User"> | string
   displayName?: Prisma.StringNullableFilter<"User"> | string | null
   bio?: Prisma.StringNullableFilter<"User"> | string | null
-  isSchoolAdmin?: Prisma.BoolFilter<"User"> | boolean
+  isSchoolAccount?: Prisma.BoolFilter<"User"> | boolean
+  verifiedSchool?: Prisma.BoolFilter<"User"> | boolean
   schoolId?: Prisma.BigIntNullableFilter<"User"> | bigint | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -927,7 +956,8 @@ export type UserCreateWithoutComplaintsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -936,7 +966,7 @@ export type UserCreateWithoutComplaintsInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
   followedSchools?: Prisma.SchoolFollowerCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateWithoutComplaintsInput = {
@@ -947,7 +977,8 @@ export type UserUncheckedCreateWithoutComplaintsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -983,7 +1014,8 @@ export type UserUpdateWithoutComplaintsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -992,7 +1024,7 @@ export type UserUpdateWithoutComplaintsInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
   followedSchools?: Prisma.SchoolFollowerUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateWithoutComplaintsInput = {
@@ -1003,7 +1035,8 @@ export type UserUncheckedUpdateWithoutComplaintsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1023,7 +1056,8 @@ export type UserCreateWithoutCommentsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1032,7 +1066,7 @@ export type UserCreateWithoutCommentsInput = {
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
   followedSchools?: Prisma.SchoolFollowerCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateWithoutCommentsInput = {
@@ -1043,7 +1077,8 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1079,7 +1114,8 @@ export type UserUpdateWithoutCommentsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1088,7 +1124,7 @@ export type UserUpdateWithoutCommentsInput = {
   bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
   followedSchools?: Prisma.SchoolFollowerUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -1099,7 +1135,8 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1119,7 +1156,8 @@ export type UserCreateWithoutBookmarksInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1128,7 +1166,7 @@ export type UserCreateWithoutBookmarksInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
   followedSchools?: Prisma.SchoolFollowerCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateWithoutBookmarksInput = {
@@ -1139,7 +1177,8 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1175,7 +1214,8 @@ export type UserUpdateWithoutBookmarksInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1184,7 +1224,7 @@ export type UserUpdateWithoutBookmarksInput = {
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
   followedSchools?: Prisma.SchoolFollowerUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBookmarksInput = {
@@ -1195,7 +1235,8 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1215,7 +1256,8 @@ export type UserCreateWithoutUpvotesInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1224,7 +1266,7 @@ export type UserCreateWithoutUpvotesInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
   followedSchools?: Prisma.SchoolFollowerCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateWithoutUpvotesInput = {
@@ -1235,7 +1277,8 @@ export type UserUncheckedCreateWithoutUpvotesInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1271,7 +1314,8 @@ export type UserUpdateWithoutUpvotesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1280,7 +1324,7 @@ export type UserUpdateWithoutUpvotesInput = {
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
   followedSchools?: Prisma.SchoolFollowerUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpvotesInput = {
@@ -1291,7 +1335,8 @@ export type UserUncheckedUpdateWithoutUpvotesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1311,7 +1356,8 @@ export type UserCreateWithoutFollowedSchoolsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1320,7 +1366,7 @@ export type UserCreateWithoutFollowedSchoolsInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
-  school?: Prisma.SchoolCreateNestedOneWithoutAdminsInput
+  school?: Prisma.SchoolCreateNestedOneWithoutAccountsInput
 }
 
 export type UserUncheckedCreateWithoutFollowedSchoolsInput = {
@@ -1331,7 +1377,8 @@ export type UserUncheckedCreateWithoutFollowedSchoolsInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: bigint | number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1367,7 +1414,8 @@ export type UserUpdateWithoutFollowedSchoolsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1376,7 +1424,7 @@ export type UserUpdateWithoutFollowedSchoolsInput = {
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
-  school?: Prisma.SchoolUpdateOneWithoutAdminsNestedInput
+  school?: Prisma.SchoolUpdateOneWithoutAccountsNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowedSchoolsInput = {
@@ -1387,7 +1435,8 @@ export type UserUncheckedUpdateWithoutFollowedSchoolsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   schoolId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1407,7 +1456,8 @@ export type UserCreateManySchoolInput = {
   role?: string
   displayName?: string | null
   bio?: string | null
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1421,7 +1471,8 @@ export type UserUpdateWithoutSchoolInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1441,7 +1492,8 @@ export type UserUncheckedUpdateWithoutSchoolInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1461,7 +1513,8 @@ export type UserUncheckedUpdateManyWithoutSchoolInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isSchoolAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSchoolAccount?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedSchool?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1551,7 +1604,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   displayName?: boolean
   bio?: boolean
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1574,7 +1628,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   displayName?: boolean
   bio?: boolean
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1590,7 +1645,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   displayName?: boolean
   bio?: boolean
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1606,14 +1662,15 @@ export type UserSelectScalar = {
   role?: boolean
   displayName?: boolean
   bio?: boolean
-  isSchoolAdmin?: boolean
+  isSchoolAccount?: boolean
+  verifiedSchool?: boolean
   schoolId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "role" | "displayName" | "bio" | "isSchoolAdmin" | "schoolId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "role" | "displayName" | "bio" | "isSchoolAccount" | "verifiedSchool" | "schoolId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   complaints?: boolean | Prisma.User$complaintsArgs<ExtArgs>
@@ -1650,7 +1707,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: string
     displayName: string | null
     bio: string | null
-    isSchoolAdmin: boolean
+    isSchoolAccount: boolean
+    verifiedSchool: boolean
     schoolId: bigint | null
     createdAt: Date
     updatedAt: Date
@@ -2092,7 +2150,8 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'String'>
   readonly displayName: Prisma.FieldRef<"User", 'String'>
   readonly bio: Prisma.FieldRef<"User", 'String'>
-  readonly isSchoolAdmin: Prisma.FieldRef<"User", 'Boolean'>
+  readonly isSchoolAccount: Prisma.FieldRef<"User", 'Boolean'>
+  readonly verifiedSchool: Prisma.FieldRef<"User", 'Boolean'>
   readonly schoolId: Prisma.FieldRef<"User", 'BigInt'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>

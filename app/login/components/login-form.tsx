@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from '@/app/actions/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function LoginForm() {
+type AuthAction = (formData: FormData) => Promise<{ error: string } | void>;
+
+export default function LoginForm({ signInAction }: { signInAction: AuthAction }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -14,13 +15,12 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const result = await signIn(formData);
+      const result = await signInAction(formData);
       if (result?.error) {
         setError(result.error);
       }
     } catch (err) {
       setError('An unexpected error occurred');
-      console.error(err);
     } finally {
       setLoading(false);
     }

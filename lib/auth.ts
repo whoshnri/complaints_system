@@ -6,7 +6,9 @@ import {
   deleteSession,
   getUserByEmail,
   getUserByUsername,
+  getUserBySessionToken,
   createUser,
+  createSchoolAccount,
 } from './db';
 
 const SESSION_COOKIE_NAME = 'voiceit_session';
@@ -64,6 +66,22 @@ export async function getSessionUser(token?: string) {
   }
 }
 
+export async function getCurrentUser(token?: string) {
+  const cookieStore = token ? null : await cookies();
+  const sessionToken = token || cookieStore?.get(SESSION_COOKIE_NAME)?.value;
+
+  if (!sessionToken) {
+    return null;
+  }
+
+  try {
+    return await getUserBySessionToken(sessionToken);
+  } catch (error) {
+    console.error('Error getting current user:', error);
+    return null;
+  }
+}
+
 export async function logout(): Promise<void> {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
@@ -76,16 +94,17 @@ export async function logout(): Promise<void> {
 }
 
 export async function registerUser(username: string, password: string, email?: string) {
+  // Check if user already exists
+  if (email) {
+    const existingUser = await getUserByEmail(email);
+    if (existingUser) {
+      throw new Error('Email already in use');
+    }
+  }
+
   const existingUsername = await getUserByUsername(username);
   if (existingUsername) {
     throw new Error('Username already in use');
-  }
-
-  if (email) {
-    const existingEmail = await getUserByEmail(email);
-    if (existingEmail) {
-      throw new Error('Email already in use');
-    }
   }
 
   // Hash password
@@ -100,7 +119,39 @@ export async function registerUser(username: string, password: string, email?: s
   return user;
 }
 
+export async function registerSchoolAccount(
+  schoolName: string,
+  faculty: string | undefined,
+  description: string | undefined,
+  username: string,
+  password: string,
+  email?: string
+) {
+  if (email) {
+    const existingUser = await getUserByEmail(email);
+    if (existingUser) {
+      throw new Error('Email already in use');
+    }
+  }
+
+  const existingUsername = await getUserByUsername(username);
+  if (existingUsername) {
+    throw new Error('Username already in use');
+  }
+
+  const passwordHash = await hashPassword(password);
+  return createSchoolAccount({
+    schoolName,
+    faculty,
+    description,
+    username,
+    email,
+    passwordHash,
+  });
+}
+
 export async function loginUser(username: string, password: string) {
+  // Get user
   const user = await getUserByUsername(username);
   if (!user) {
     throw new Error('Invalid username or password');
@@ -116,4 +167,36 @@ export async function loginUser(username: string, password: string) {
   await createSessionToken(user.id);
 
   return { id: user.id, email: user.email, username: user.username };
+}
+
+export async function loginSchoolAccount(username: string, password: string) {
+  const user = await getUserByUsername(username);
+  if (!user) {
+    throw new Error('Invalid username or password');
+  }
+
+  const isValidPassword = await verifyPassword(password, user.password_hash);
+  if (!isValidPassword) {
+    throw new Error('Invalid username or password');
+  }
+
+  if (user.role !== 'school' && !user.is_school_account) {
+    throw new Error('School account access required');
+  }
+
+  if (!user.school_id) {
+    throw new Error('School account is not linked to a school profile');
+  }
+
+  await createSessionToken(user.id);
+
+  return {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+    role: user.role,
+    school_id: user.school_id,
+    is_school_account: user.is_school_account,
+    verified_school: user.verified_school,
+  };
 }

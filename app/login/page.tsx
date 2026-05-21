@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { signIn } from '@/app/actions/auth';
 import LoginForm from './components/login-form';
 
 export const metadata: Metadata = {
@@ -15,12 +16,18 @@ export default function LoginPage() {
           <p className="text-muted-foreground">Anonymous student feedback platform</p>
         </div>
 
-        <LoginForm />
+        <LoginForm signInAction={signIn} />
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
           Don't have an account?{' '}
           <a href="/signup" className="font-medium text-foreground hover:underline">
             Sign up
+          </a>
+        </div>
+        <div className="mt-3 text-center text-sm text-muted-foreground">
+          School account?{' '}
+          <a href="/school-login" className="font-medium text-primary hover:underline">
+            Open school login
           </a>
         </div>
       </div>

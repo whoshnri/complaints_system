@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { signUp } from '@/app/actions/auth';
 import SignUpForm from './components/signup-form';
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default function SignUpPage() {
           <p className="text-muted-foreground">Create your anonymous feedback account</p>
         </div>
 
-        <SignUpForm />
+        <SignUpForm signUpAction={signUp} />
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{' '}
